@@ -3,16 +3,7 @@
   "info": {
     "version": "2.0.0",
     "title": "Astrogate ASTROS Station RESTful API",
-    "description": "The API for ASTROS Station",
-    "contact": {
-      "name": "System Developer",
-      "email": "systemdeveloper@astrogate.com",
-      "url": "https://www.astrogate.com"
-    },
-    "license": {
-      "name": "Apache 2.0",
-      "url": "https://www.apache.org/licenses/LICENSE-2.0.html"
-    }
+    "description": "The API for ASTROS Station"
   },
   "servers": [
     {
