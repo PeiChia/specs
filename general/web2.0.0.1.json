@@ -48,7 +48,7 @@
   "tags": [
     {
       "name": "BeforeLogin",
-      "description": "登入設定頁以外的行為，不用帶上 token"
+      "description": "Actions other than logging into the settings page do not require a token"
     },
     {
       "name": "Login"
@@ -105,7 +105,7 @@
         "tags": [
           "BeforeLogin"
         ],
-        "description": "取得 Quick Join 檔名",
+        "description": "Obtain the Quick Join filename",
         "responses": {
           "200": {
             "description": "Success",
@@ -150,7 +150,7 @@
         "tags": [
           "BeforeLogin"
         ],
-        "description": "取得 login code",
+        "description": "Obtain the login code",
         "parameters": [
           {
             "in": "query",
@@ -231,7 +231,7 @@
         "tags": [
           "BeforeLogin"
         ],
-        "description": "網頁初始化，需要事先載入的參數",
+        "description": "Webpage initialization requires preloaded parameters",
         "responses": {
           "200": {
             "description": "Success",
@@ -301,7 +301,7 @@
         "tags": [
           "Login"
         ],
-        "description": "輸入密碼，登入 station 設定頁面",
+        "description": "Enter the password to log in to the station settings page",
         "requestBody": {
           "content": {
             "application/json": {
@@ -313,7 +313,7 @@
         },
         "responses": {
           "200": {
-            "description": "回應成功，判斷業務邏輯",
+            "description": "Response successful, determine business logic",
             "content": {
               "application/json": {
                 "schema": {
@@ -341,8 +341,8 @@
         "tags": [
           "Login"
         ],
-        "summary": "尚未實作，暫時還不需要處理 moderation 相關的 API",
-        "description": "輸入密碼，登入 moderation 操作頁面",
+        "summary": "Not yet implemented, moderation-related APIs do not need to be handled at this time",
+        "description": "Enter the password to log in to the moderation operation page",
         "requestBody": {
           "content": {
             "application/json": {
@@ -354,7 +354,7 @@
         },
         "responses": {
           "200": {
-            "description": "回應成功，判斷業務邏輯",
+            "description": "Response successful, determine business logic",
             "content": {
               "application/json": {
                 "schema": {
@@ -382,7 +382,7 @@
         "tags": [
           "Global"
         ],
-        "description": "重啟 station",
+        "description": "Restart station",
         "security": [
           {
             "ApiKeyAuth": []
@@ -435,7 +435,7 @@
         "tags": [
           "Upload"
         ],
-        "description": "凡是上傳 wallpaper, firmware, configuration 都會使用",
+        "description": "Uploading wallpaper, firmware, or configuration will always use this",
         "security": [
           {
             "ApiKeyAuth": []
@@ -522,7 +522,7 @@
         "tags": [
           "General"
         ],
-        "description": "取得常用設定",
+        "description": "Retrieve common settings",
         "security": [
           {
             "ApiKeyAuth": []
@@ -584,7 +584,7 @@
         "tags": [
           "General"
         ],
-        "description": "修改部分常用設定",
+        "description": "Modify certain common settings",
         "security": [
           {
             "ApiKeyAuth": []
@@ -628,7 +628,7 @@
         "tags": [
           "General"
         ],
-        "description": "顯示 wallpaper 清單",
+        "description": "Display wallpaper list",
         "security": [
           {
             "ApiKeyAuth": []
@@ -689,7 +689,7 @@
         "tags": [
           "General"
         ],
-        "description": "刪除指定 wallpaper",
+        "description": "Delete specified wallpaper",
         "security": [
           {
             "ApiKeyAuth": []
@@ -738,7 +738,7 @@
         "tags": [
           "HDMI & VGA"
         ],
-        "description": "取得解析度設定",
+        "description": "Retrieve resolution settings",
         "security": [
           {
             "ApiKeyAuth": []
@@ -858,7 +858,7 @@
         "tags": [
           "HDMI & VGA"
         ],
-        "description": "變更解析度設定",
+        "description": "Change resolution settings",
         "security": [
           {
             "ApiKeyAuth": []
@@ -920,7 +920,7 @@
         "tags": [
           "HDMI & VGA"
         ],
-        "description": "顯示 resolution 清單",
+        "description": "Display resolution list",
         "security": [
           {
             "ApiKeyAuth": []
@@ -983,7 +983,7 @@
         "tags": [
           "DateTime"
         ],
-        "description": "取得時間設定",
+        "description": "Retrieve time settings",
         "security": [
           {
             "ApiKeyAuth": []
@@ -1070,7 +1070,7 @@
         "tags": [
           "DateTime"
         ],
-        "description": "修改部分時間設定",
+        "description": "Modify certain time settings",
         "security": [
           {
             "ApiKeyAuth": []
@@ -1114,7 +1114,7 @@
         "tags": [
           "Wi-Fi"
         ],
-        "description": "取得 Wi-Fi 設定",
+        "description": "Retrieve Wi-Fi settings",
         "security": [
           {
             "ApiKeyAuth": []
@@ -1219,7 +1219,7 @@
         "tags": [
           "Wi-Fi"
         ],
-        "description": "修改部分 Wi-Fi 設定",
+        "description": "Modify certain Wi-Fi settings",
         "security": [
           {
             "ApiKeyAuth": []
@@ -1300,7 +1300,7 @@
         "tags": [
           "Wi-Fi"
         ],
-        "description": "顯示 Wi-Fi 清單，僅選擇 Other AP 模式才會出現",
+        "description": "Display Wi-Fi list, only visible in 'Other AP' mode",
         "security": [
           {
             "ApiKeyAuth": []
@@ -1395,7 +1395,7 @@
         "tags": [
           "Wi-Fi"
         ],
-        "description": "顯示 Wi-Fi 連線資訊，僅選擇 Other AP 模式且有連線 Wi-Fi 才會出現",
+        "description": "Display Wi-Fi connection info, only visible in 'Other AP' mode with a connected Wi-Fi network",
         "security": [
           {
             "ApiKeyAuth": []
@@ -1527,7 +1527,7 @@
         "tags": [
           "Wi-Fi"
         ],
-        "description": "手動新增 Wi-Fi 連線資訊，僅選擇 Other AP 模式才會出現",
+        "description": "Manually add Wi-Fi connection info, only visible in 'Other AP' mode",
         "security": [
           {
             "ApiKeyAuth": []
@@ -1569,7 +1569,7 @@
         "tags": [
           "Wi-Fi"
         ],
-        "description": "從 Wi-Fi 清單點選 ssid 連線，僅選擇 Other AP 模式才會出現",
+        "description": "Connect to SSID from Wi-Fi list, only visible in 'Other AP' mode",
         "security": [
           {
             "ApiKeyAuth": []
@@ -1627,7 +1627,7 @@
         "tags": [
           "Wi-Fi"
         ],
-        "description": "忘記 Wi-Fi 連線，僅選擇 Other AP 模式且有連線 Wi-Fi 才會出現",
+        "description": "Forget Wi-Fi connection, only visible in 'Other AP' mode with a connected Wi-Fi network",
         "security": [
           {
             "ApiKeyAuth": []
@@ -1672,7 +1672,7 @@
         "tags": [
           "Ethernet"
         ],
-        "description": "取得 Ethernet 設定",
+        "description": "Retrieve Ethernet settings",
         "security": [
           {
             "ApiKeyAuth": []
@@ -1704,7 +1704,7 @@
                                 "connected": {
                                   "type": "boolean",
                                   "example": true,
-                                  "description": "若 Wi-Fi 選擇橋接模式，需要該欄位判斷後續行為"
+                                  "description": "If Wi-Fi is set to bridge mode, this field is needed to determine subsequent actions"
                                 },
                                 "enableDHCP": {
                                   "type": "boolean",
@@ -1758,7 +1758,7 @@
         "tags": [
           "Ethernet"
         ],
-        "description": "變更 Ethernet 設定",
+        "description": "Change Ethernet settings",
         "security": [
           {
             "ApiKeyAuth": []
@@ -1821,7 +1821,7 @@
         "tags": [
           "Update"
         ],
-        "description": "取得韌體版號",
+        "description": "Retrieve firmware version",
         "security": [
           {
             "ApiKeyAuth": []
@@ -1834,7 +1834,7 @@
           {
             "name": "hasNew",
             "in": "query",
-            "description": "true 時檢查 OTA 更新，其餘僅顯示版號",
+            "description": "When true, check for OTA updates, otherwise only display version number",
             "schema": {
               "type": "boolean"
             }
@@ -1858,7 +1858,7 @@
                           "properties": {
                             "current": {
                               "type": "string",
-                              "description": "當前版號",
+                              "description": "Current version number",
                               "example": "2.2.1.281(20230512)"
                             },
                             "new": {
@@ -1932,7 +1932,7 @@
         "tags": [
           "Update"
         ],
-        "description": "手動更新和遠端更新都是同一支 API，僅以 isManual 變數控制",
+        "description": "Both manual and remote updates use the same API, controlled by the isManual variable",
         "security": [
           {
             "ApiKeyAuth": []
@@ -1946,7 +1946,7 @@
             "name": "isManual",
             "in": "query",
             "required": true,
-            "description": "true 時手動更新，false 則遠端更新",
+            "description": "When true, manual update; when false, remote update",
             "schema": {
               "type": "boolean"
             }
@@ -1986,7 +1986,7 @@
         "tags": [
           "Update"
         ],
-        "description": "開始遠端 OTA 下載",
+        "description": "Start remote OTA download",
         "security": [
           {
             "ApiKeyAuth": []
@@ -2015,13 +2015,13 @@
                           "properties": {
                             "process": {
                               "type": "string",
-                              "description": "進度百分比",
+                              "description": "Progress percentage",
                               "minimum": 0,
                               "maximum": 100
                             },
                             "status": {
                               "type": "integer",
-                              "description": "-1:失敗, 1:下載中, 2:下載完成",
+                              "description": "-1: failed, 1: downloading, 2: download complete",
                               "example": 1,
                               "enum": [
                                 -1,
@@ -2087,7 +2087,7 @@
         "tags": [
           "Update"
         ],
-        "description": "停止遠端 OTA 下載",
+        "description": "Stop remote OTA download",
         "security": [
           {
             "ApiKeyAuth": []
@@ -2133,7 +2133,7 @@
         "tags": [
           "Update"
         ],
-        "description": "檢查 OTA 檔案有沒有下載到本地端",
+        "description": "Check if the OTA file has been downloaded locally",
         "security": [
           {
             "ApiKeyAuth": []
@@ -2178,7 +2178,7 @@
         "tags": [
           "Password"
         ],
-        "description": "變更 admin 密碼",
+        "description": "Change admin password",
         "security": [
           {
             "ApiKeyAuth": []
@@ -2206,7 +2206,7 @@
                 },
                 "init_password": {
                   "summary": "Change default password",
-                  "description": "初次進入 station 畫面，需要重設密碼。該行為不用 X-API-KEY 和 username，且無法在 swagger 測試",
+                  "description": "On first entry to the station screen, a password reset is required. This operation does not require X-API-KEY or username and cannot be tested via Swagger",
                   "value": {
                     "new": "admin233"
                   }
@@ -2294,7 +2294,7 @@
         "tags": [
           "Password"
         ],
-        "description": "變更 moderation 密碼",
+        "description": "Change moderation password",
         "security": [
           {
             "ApiKeyAuth": []
@@ -2322,7 +2322,7 @@
                 },
                 "init_password": {
                   "summary": "Change default password",
-                  "description": "初次進入 station 畫面，需要重設密碼。該行為不用 X-API-KEY 和 username，且無法在 swagger 測試",
+                  "description": "On first entry to the station screen, a password reset is required. This operation does not require X-API-KEY or username, and cannot be tested via Swagger",
                   "value": {
                     "new": "moderator233"
                   }
@@ -2410,7 +2410,7 @@
         "tags": [
           "Pod"
         ],
-        "description": "取得Pod配對的設定",
+        "description": "Retrieve Pod pairing settings",
         "security": [
           {
             "ApiKeyAuth": []
@@ -2443,7 +2443,7 @@
                 },
                 "examples": {
                   "Success_0": {
-                    "summary": "Success > 預設 this station",
+                    "summary": "Success > Default 'this station'",
                     "value": {
                       "data": {
                         "mode": 0,
@@ -2459,7 +2459,7 @@
                     }
                   },
                   "Success_1": {
-                    "summary": "Success > other 非 WPA2",
+                    "summary": "Success > other and not WPA2",
                     "value": {
                       "data": {
                         "mode": 1,
@@ -2475,7 +2475,7 @@
                     }
                   },
                   "Success_2": {
-                    "summary": "Success > other 且 WPA2",
+                    "summary": "Success > other and WPA2",
                     "value": {
                       "data": {
                         "mode": 1,
@@ -2503,7 +2503,7 @@
         "tags": [
           "Pod"
         ],
-        "description": "設定Pod配對的狀態",
+        "description": "Set the Pod pairing status",
         "security": [
           {
             "ApiKeyAuth": []
@@ -2554,7 +2554,7 @@
         "tags": [
           "MirroringService"
         ],
-        "description": "取得所有投影功能的啟用狀態",
+        "description": "Retrieve the activation status of all projection features",
         "security": [
           {
             "ApiKeyAuth": []
@@ -2613,7 +2613,7 @@
         "tags": [
           "MirroringService"
         ],
-        "description": "設定投影功能的啟用狀態",
+        "description": "Set the activation status of projection features",
         "security": [
           {
             "ApiKeyAuth": []
@@ -2664,7 +2664,7 @@
         "tags": [
           "System"
         ],
-        "description": "設定將會重置回出廠值，但韌體版本不會重置",
+        "description": "The settings will be reset to factory values, but the firmware version will not be reset",
         "security": [
           {
             "ApiKeyAuth": []
@@ -2706,7 +2706,7 @@
         "tags": [
           "System"
         ],
-        "description": "取得系統日誌下載狀態",
+        "description": "Retrieve the system log download status",
         "security": [
           {
             "ApiKeyAuth": []
@@ -2766,7 +2766,7 @@
         "tags": [
           "System"
         ],
-        "description": "啟用系統日誌下載",
+        "description": "Enable system log download",
         "security": [
           {
             "ApiKeyAuth": []
@@ -2820,7 +2820,7 @@
         "tags": [
           "System"
         ],
-        "description": "取得系統日誌資訊與下載進度",
+        "description": "Retrieve system log information and download progress",
         "security": [
           {
             "ApiKeyAuth": []
@@ -2917,7 +2917,7 @@
         "tags": [
           "System"
         ],
-        "description": "下載系統日誌到 Station 指定資料夾",
+        "description": "Download system logs to a designated folder on the Station",
         "security": [
           {
             "ApiKeyAuth": []
@@ -2952,7 +2952,7 @@
         "tags": [
           "System"
         ],
-        "description": "取得設定檔檔名",
+        "description": "Retrieve configuration file name",
         "security": [
           {
             "ApiKeyAuth": []
@@ -2992,7 +2992,7 @@
         "tags": [
           "System"
         ],
-        "description": "匯入設定檔",
+        "description": "Import configuration file",
         "security": [
           {
             "ApiKeyAuth": []
@@ -3049,7 +3049,7 @@
         "tags": [
           "Power"
         ],
-        "description": "取得節能設定",
+        "description": "Retrieve power-saving settings",
         "security": [
           {
             "ApiKeyAuth": []
@@ -3116,7 +3116,7 @@
         "tags": [
           "Power"
         ],
-        "description": "修改部分節能設定",
+        "description": "Modify part of the power-saving settings",
         "security": [
           {
             "ApiKeyAuth": []
@@ -3175,7 +3175,7 @@
         "tags": [
           "RemoteControl"
         ],
-        "description": "取得 ASTROS Manager Server",
+        "description": "Retrieve ASTROS Manager Server",
         "security": [
           {
             "ApiKeyAuth": []
@@ -3215,7 +3215,7 @@
         "tags": [
           "RemoteControl"
         ],
-        "description": "變更 ASTROS Manager Server",
+        "description": "Change ASTROS Manager Server",
         "security": [
           {
             "ApiKeyAuth": []
@@ -3276,7 +3276,7 @@
         "tags": [
           "RemoteControl"
         ],
-        "description": "取得 API token",
+        "description": "Retrieve API token",
         "responses": {
           "200": {
             "description": "Success",
@@ -3326,7 +3326,7 @@
         "tags": [
           "RemoteControl"
         ],
-        "description": "取得 API token",
+        "description": "Update API token",
         "parameters": [
           {
             "$ref": "#/components/parameters/userParameter"
@@ -3379,7 +3379,7 @@
         "tags": [
           "Conference"
         ],
-        "description": "取得 AppVC 啟用狀態",
+        "description": "Retrieve AppVC activation status",
         "responses": {
           "200": {
             "description": "Success",
@@ -3398,17 +3398,17 @@
                           "properties": {
                             "expiredDate": {
                               "type": "string",
-                              "description": "永久 key 都會是 2099 開頭",
+                              "description": "Permanent keys will always start with 2099",
                               "example": "2024-04-26"
                             },
                             "key": {
                               "type": "string",
-                              "description": "預設空字串，若永久 key 啟用成功就會出現值",
+                              "description": "Default is an empty string; if the permanent key is activated successfully, a value will appear",
                               "example": "l3BzuIRHpjHUoeCr50dPrs37l07khmfcDSMWdYINQoBBXhsghqIggP17vujNZG8stQA="
                             },
                             "status": {
                               "type": "integer",
-                              "description": "0(未啟用), 1(啟用), 2(過期)",
+                              "description": "0 (Not activated), 1 (Activated), 2 (Expired)",
                               "example": 1
                             }
                           }
@@ -3419,7 +3419,7 @@
                 },
                 "examples": {
                   "NotEnabled": {
-                    "summary": "未啟用",
+                    "summary": "Not activated",
                     "value": {
                       "data": {
                         "expiredDate": "",
@@ -3433,7 +3433,7 @@
                     }
                   },
                   "Enabled": {
-                    "summary": "試用版啟用中",
+                    "summary": "Trial version activated",
                     "value": {
                       "data": {
                         "expiredDate": "2029-04-26",
@@ -3447,7 +3447,7 @@
                     }
                   },
                   "OfficialEnabled": {
-                    "summary": "正式版啟用中",
+                    "summary": "Full version activated",
                     "value": {
                       "data": {
                         "expiredDate": "2099-12-30",
@@ -3461,7 +3461,7 @@
                     }
                   },
                   "Expired": {
-                    "summary": "過期(只有試用版會過期)",
+                    "summary": "Expired (only the trial version can expire)",
                     "value": {
                       "data": {
                         "expiredDate": "2024-04-10",
@@ -3484,7 +3484,7 @@
         "tags": [
           "Conference"
         ],
-        "description": "啟用 AppVC Key",
+        "description": "Activate AppVC Key",
         "parameters": [
           {
             "$ref": "#/components/parameters/userParameter"
@@ -3503,12 +3503,12 @@
                 "properties": {
                   "key": {
                     "type": "string",
-                    "description": "輸入取得的 key 值 (會是一個 <= 70 字元的字串，且僅允許英文字母大小寫、數字、=/+而已)",
+                    "description": "Enter the obtained key (a string of ≤ 70 characters, only allowing uppercase and lowercase letters, numbers, =, /, +)",
                     "example": "l3BzuIRHpjHUuOmwlgN5ylzKSWrr5xRAZhM2rL0PjUwsCK2CpCrJu3UK/HqNv6KIDLE="
                   },
                   "type": {
                     "type": "string",
-                    "description": "目前固定用 appvc",
+                    "description": "Currently fixed to use appvc",
                     "example": "appvc"
                   }
                 }
@@ -3526,7 +3526,7 @@
                 },
                 "examples": {
                   "Success": {
-                    "summary": "啟用成功",
+                    "summary": "Activation successful",
                     "value": {
                       "data": "",
                       "errorCode": 0,
@@ -3536,7 +3536,7 @@
                     }
                   },
                   "KeyNotFound": {
-                    "summary": "DB找不到Key",
+                    "summary": "Key not found in DB",
                     "value": {
                       "data": "",
                       "errorCoe": 1000,
@@ -3547,7 +3547,7 @@
                     }
                   },
                   "NotConsistent": {
-                    "summary": "vendor或model與資料不匹配",
+                    "summary": "Vendor or model mismatch with data",
                     "value": {
                       "data": "",
                       "errorCoe": 1000,
@@ -3558,7 +3558,7 @@
                     }
                   },
                   "AlreadyRegistered": {
-                    "summary": "已啟用",
+                    "summary": "Already activated",
                     "value": {
                       "data": "",
                       "errorCoe": 1000,
@@ -3569,7 +3569,7 @@
                     }
                   },
                   "AlreadyOfficialVersion": {
-                    "summary": "已經是永久版",
+                    "summary": "Already a permanent version",
                     "value": {
                       "data": "",
                       "errorCoe": 1000,
@@ -3599,12 +3599,12 @@
           "account": {
             "type": "string",
             "example": "admin",
-            "description": "預設為 admin"
+            "description": "Default is admin"
           },
           "password": {
             "type": "string",
             "example": "admin",
-            "description": "預設為 admin，使用者可自行變更"
+            "description": "Default is admin, but users can change it"
           }
         }
       },
@@ -3618,12 +3618,12 @@
           "account": {
             "type": "string",
             "example": "moderator",
-            "description": "預設為 moderator"
+            "description": "Default is moderator"
           },
           "password": {
             "type": "string",
             "example": "moderator",
-            "description": "預設為 moderator，使用者可自行變更"
+            "description": "Default is moderator, but users can change it"
           }
         }
       },
@@ -3642,7 +3642,7 @@
           "devName": {
             "type": "string",
             "example": "AS201-0024",
-            "description": "變動後會將所有網路斷線，須重啟"
+            "description": "Changing this will disconnect all networks, requiring a restart"
           },
           "codeType": {
             "type": "integer",
@@ -3678,7 +3678,7 @@
           "curLanguage": {
             "type": "integer",
             "example": 0,
-            "description": "(0)English, (1)正體中文, (2)简体中文, (3)にほんご (日本語)",
+            "description": "(0) English, (1) Traditional Chinese, (2) Simplified Chinese, (3) Japanese",
             "enum": [
               0,
               1,
@@ -3694,7 +3694,7 @@
           "enableVGA": {
             "type": "boolean",
             "example": false,
-            "description": "是否切換 VGA 模式"
+            "description": "Switch to VGA mode?"
           },
           "resolution": {
             "type": "string",
@@ -3704,7 +3704,7 @@
           "isAudioFromHDMI": {
             "type": "boolean",
             "example": false,
-            "description": "指定聲音從 HDMI 輸出"
+            "description": "Specify audio output via HDMI"
           }
         }
       },
@@ -3714,17 +3714,17 @@
           "isAutoTime": {
             "type": "boolean",
             "example": true,
-            "description": "自動設定時間"
+            "description": "Automatically set the time"
           },
           "showTime24": {
             "type": "boolean",
             "example": false,
-            "description": "顯示 24 小時制"
+            "description": "Display in 24-hour format"
           },
           "ntpServer": {
             "type": "string",
             "example": "ntp.nict.jp",
-            "description": "網路時間協定"
+            "description": "Network Time Protocol"
           },
           "timeZone": {
             "type": "string",
@@ -3869,32 +3869,32 @@
               "security": {
                 "type": "string",
                 "example": "wpa2",
-                "description": "各種 wifi 類型"
+                "description": "Various types of Wi-Fi."
               },
               "password": {
                 "type": "string",
                 "example": "83566024",
-                "description": "選擇 security 時必填"
+                "description": "Required when security is selected"
               },
               "eapMethod": {
                 "type": "string",
                 "example": "",
-                "description": "security 選擇 EAP 時填寫"
+                "description": "Required when security is set to EAP"
               },
               "phase": {
                 "type": "string",
                 "example": "",
-                "description": "security 選擇 EAP 時填寫"
+                "description": "Required when security is set to EAP"
               },
               "identity": {
                 "type": "string",
                 "example": "",
-                "description": "security 選擇 EAP 時填寫"
+                "description": "Required when security is set to EAP"
               },
               "isStaticIp": {
                 "type": "boolean",
                 "example": true,
-                "description": "true 才需要填寫 static ip 的相關資訊"
+                "description": "Only true requires filling in static IP related information"
               },
               "reconnect": {
                 "type": "boolean",
@@ -3979,7 +3979,7 @@
           "password": {
             "type": "string",
             "example": "qwer!!test",
-            "description": "無限制，因為 User 的 ssid 密碼有各種特殊符號"
+            "description": "No restrictions, as the user's SSID password may contain various special characters"
           }
         }
       },
