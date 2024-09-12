@@ -1,0 +1,4352 @@
+{
+  "openapi": "3.0.3",
+  "info": {
+    "version": "1.0.8",
+    "title": "Astrogate ASTROS Station RESTful API",
+    "description": "The API for ASTROS Station",
+    "contact": {
+      "name": "System Developer",
+      "email": "systemdeveloper@astrogate.com",
+      "url": "https://www.astrogate.com"
+    },
+    "license": {
+      "name": "Apache 2.0",
+      "url": "https://www.apache.org/licenses/LICENSE-2.0.html"
+    }
+  },
+  "servers": [
+    {
+      "description": "SwaggerHub API Auto Mocking",
+      "url": "https://virtserver.swaggerhub.com/astros/astrogate-astros_station_res_tful_api/1.0.8"
+    },
+    {
+      "description": "Astrogate ASTROS Station",
+      "url": "{protocol}://{environment}/api/v2",
+      "variables": {
+        "protocol": {
+          "description": "The Data Set API is accessible via https and http",
+          "enum": [
+            "https",
+            "http"
+          ],
+          "default": "https"
+        },
+        "environment": {
+          "description": "Enter the environment manually",
+          "default": "AS201-0024"
+        },
+        "port": {
+          "default": "443",
+          "enum": [
+            "443",
+            "8443"
+          ]
+        }
+      }
+    }
+  ],
+  "tags": [
+    {
+      "name": "BeforeLogin",
+      "description": "登入設定頁以外的行為，不用帶上 token"
+    },
+    {
+      "name": "Login"
+    },
+    {
+      "name": "Global"
+    },
+    {
+      "name": "Upload"
+    },
+    {
+      "name": "General"
+    },
+    {
+      "name": "HDMI & VGA"
+    },
+    {
+      "name": "DateTime"
+    },
+    {
+      "name": "Wi-Fi"
+    },
+    {
+      "name": "Ethernet"
+    },
+    {
+      "name": "Update"
+    },
+    {
+      "name": "Password"
+    },
+    {
+      "name": "Pod"
+    },
+    {
+      "name": "MirroringService"
+    },
+    {
+      "name": "System"
+    },
+    {
+      "name": "Power"
+    },
+    {
+      "name": "RemoteControl"
+    },
+    {
+      "name": "Conference"
+    }
+  ],
+  "paths": {
+    "/station/quickJoin": {
+      "get": {
+        "tags": [
+          "BeforeLogin"
+        ],
+        "description": "取得 Quick Join 檔名",
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "allOf": [
+                    {
+                      "$ref": "#/components/schemas/GeneralResponse"
+                    },
+                    {
+                      "type": "object",
+                      "properties": {
+                        "data": {
+                          "type": "string",
+                          "example": "AS201-0024.aqj"
+                        }
+                      }
+                    }
+                  ]
+                },
+                "examples": {
+                  "Success": {
+                    "summary": "Success",
+                    "value": {
+                      "data": "AS201-0024.aqj",
+                      "errorCode": 0,
+                      "isSuccess": true,
+                      "model": "AS-201",
+                      "rebootRequired": false
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/station/general/logincode": {
+      "get": {
+        "tags": [
+          "BeforeLogin"
+        ],
+        "description": "取得 login code",
+        "parameters": [
+          {
+            "in": "query",
+            "name": "username",
+            "example": "frontend",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "allOf": [
+                    {
+                      "$ref": "#/components/schemas/GeneralResponse"
+                    },
+                    {
+                      "type": "object",
+                      "properties": {
+                        "data": {
+                          "type": "object",
+                          "properties": {
+                            "codeType": {
+                              "type": "integer",
+                              "format": "int32",
+                              "example": 1,
+                              "description": "0(random), 1(no code), 2(fixed)",
+                              "enum": [
+                                0,
+                                1,
+                                2
+                              ]
+                            }
+                          }
+                        }
+                      }
+                    }
+                  ]
+                },
+                "examples": {
+                  "Success": {
+                    "summary": "Success",
+                    "value": {
+                      "data": {
+                        "codeType": 1
+                      },
+                      "errorCode": 0,
+                      "isSuccess": true,
+                      "model": "AS-201",
+                      "rebootRequired": false
+                    }
+                  },
+                  "Fail_Username_is_wrong": {
+                    "summary": "Fail(Username is wrong)",
+                    "value": {
+                      "data": "",
+                      "errorCode": 1000,
+                      "errorMsg": "Fail: username is wrong",
+                      "isSuccess": false,
+                      "model": "AS-201",
+                      "rebootRequired": false
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/station/model": {
+      "get": {
+        "tags": [
+          "BeforeLogin"
+        ],
+        "description": "網頁初始化，需要事先載入的參數",
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "allOf": [
+                    {
+                      "$ref": "#/components/schemas/GeneralResponse"
+                    },
+                    {
+                      "type": "object",
+                      "properties": {
+                        "data": {
+                          "type": "object",
+                          "properties": {
+                            "devName": {
+                              "type": "string",
+                              "example": "AS201-0024",
+                              "description": "ssid name"
+                            },
+                            "model": {
+                              "type": "string",
+                              "example": "AS-201"
+                            },
+                            "isAdminInit": {
+                              "type": "boolean",
+                              "example": true,
+                              "description": "The default password must be changed when the system is initialized."
+                            },
+                            "isModerationInit": {
+                              "type": "boolean",
+                              "example": true,
+                              "description": "The default password must be changed when the system is initialized."
+                            }
+                          }
+                        }
+                      }
+                    }
+                  ]
+                },
+                "examples": {
+                  "Success": {
+                    "summary": "Success",
+                    "value": {
+                      "data": {
+                        "devName": "AS201-0024",
+                        "model": "AS-201",
+                        "isAdminInit": true,
+                        "isModerationInit": true
+                      },
+                      "errorCode": 0,
+                      "isSuccess": true,
+                      "model": "AS-201",
+                      "rebootRequired": false
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/station/login": {
+      "post": {
+        "tags": [
+          "Login"
+        ],
+        "description": "輸入密碼，登入 station 設定頁面",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UserInfo"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "回應成功，判斷業務邏輯",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/LoginResponse"
+                },
+                "examples": {
+                  "success_0": {
+                    "$ref": "#/components/examples/success_login"
+                  },
+                  "failed_1003": {
+                    "$ref": "#/components/examples/failed_1003"
+                  },
+                  "failed_1005": {
+                    "$ref": "#/components/examples/failed_1005"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/moderation/login": {
+      "post": {
+        "tags": [
+          "Login"
+        ],
+        "summary": "尚未實作，暫時還不需要處理 moderation 相關的 API",
+        "description": "輸入密碼，登入 moderation 操作頁面",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ModerationInfo"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "回應成功，判斷業務邏輯",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/LoginResponse"
+                },
+                "examples": {
+                  "success_0": {
+                    "$ref": "#/components/examples/success_login"
+                  },
+                  "failed_1003": {
+                    "$ref": "#/components/examples/failed_1003"
+                  },
+                  "failed_1005": {
+                    "$ref": "#/components/examples/failed_1005"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/station/reboot": {
+      "post": {
+        "tags": [
+          "Global"
+        ],
+        "description": "重啟 station",
+        "security": [
+          {
+            "ApiKeyAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/userParameter"
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "setDhcp": {
+                    "type": "boolean",
+                    "example": false
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GeneralResponse"
+                },
+                "examples": {
+                  "Success": {
+                    "$ref": "#/components/examples/success_0"
+                  },
+                  "failed_1003": {
+                    "$ref": "#/components/examples/failed_1003"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/station/upload": {
+      "post": {
+        "tags": [
+          "Upload"
+        ],
+        "description": "凡是上傳 wallpaper, firmware, configuration 都會使用",
+        "security": [
+          {
+            "ApiKeyAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/userParameter"
+          },
+          {
+            "name": "type",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "enum": [
+                "BG",
+                "OTA"
+              ]
+            }
+          },
+          {
+            "name": "name",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "[BG] name like 3-cat.jpg; [OTA] ota use update.zip; config use AstrosProfile.json"
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "multipart/form-data": {
+              "schema": {
+                "$ref": "#/components/schemas/FileDescription"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GeneralResponse"
+                },
+                "examples": {
+                  "Success": {
+                    "$ref": "#/components/examples/success_0"
+                  },
+                  "failed_1200": {
+                    "summary": "The input file format is unavailable",
+                    "value": {
+                      "data": "",
+                      "errorCoe": 1200,
+                      "errorMsg": "The input file is unavailable: Not a image file",
+                      "isSuccess": false,
+                      "model": "AS-201",
+                      "rebootRequired": false
+                    }
+                  },
+                  "failed_1000": {
+                    "summary": "Wallpaper already exists",
+                    "value": {
+                      "data": "",
+                      "errorCoe": 1000,
+                      "errorMsg": "Fail: Wallpaper already exists",
+                      "isSuccess": false,
+                      "model": "AS-201",
+                      "rebootRequired": false
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/station/general": {
+      "get": {
+        "tags": [
+          "General"
+        ],
+        "description": "取得常用設定",
+        "security": [
+          {
+            "ApiKeyAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/userParameter"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "allOf": [
+                    {
+                      "$ref": "#/components/schemas/GeneralResponse"
+                    },
+                    {
+                      "type": "object",
+                      "properties": {
+                        "data": {
+                          "$ref": "#/components/schemas/GeneralInfo"
+                        }
+                      }
+                    }
+                  ]
+                },
+                "examples": {
+                  "Success": {
+                    "summary": "Success",
+                    "value": {
+                      "data": {
+                        "allowRemoteView": false,
+                        "codeType": 1,
+                        "codeValue": "",
+                        "curLanguage": 0,
+                        "curWallpaper": 0,
+                        "devName": "AS201-0024"
+                      },
+                      "errorCode": 0,
+                      "isSuccess": true,
+                      "model": "AS-201",
+                      "rebootRequired": false
+                    }
+                  },
+                  "failed_1001": {
+                    "$ref": "#/components/examples/failed_1001"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "patch": {
+        "tags": [
+          "General"
+        ],
+        "description": "修改部分常用設定",
+        "security": [
+          {
+            "ApiKeyAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/userParameter"
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/GeneralInfo"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GeneralResponse"
+                },
+                "examples": {
+                  "Success": {
+                    "$ref": "#/components/examples/success_0"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/station/general/wallpaper/list": {
+      "get": {
+        "tags": [
+          "General"
+        ],
+        "description": "顯示 wallpaper 清單",
+        "security": [
+          {
+            "ApiKeyAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/userParameter"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "allOf": [
+                    {
+                      "$ref": "#/components/schemas/GeneralResponse"
+                    },
+                    {
+                      "type": "object",
+                      "properties": {
+                        "data": {
+                          "type": "array",
+                          "items": {
+                            "type": "string",
+                            "example": "0.png, 1.png"
+                          }
+                        }
+                      }
+                    }
+                  ]
+                },
+                "examples": {
+                  "Success": {
+                    "summary": "Success",
+                    "value": {
+                      "data": [
+                        "0.png",
+                        "1.png"
+                      ],
+                      "errorCode": 0,
+                      "isSuccess": true,
+                      "model": "AS-201",
+                      "rebootRequired": false
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/station/general/wallpaper/{id}": {
+      "delete": {
+        "tags": [
+          "General"
+        ],
+        "description": "刪除指定 wallpaper",
+        "security": [
+          {
+            "ApiKeyAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/idParameter"
+          },
+          {
+            "$ref": "#/components/parameters/userParameter"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GeneralResponse"
+                },
+                "examples": {
+                  "Success": {
+                    "$ref": "#/components/examples/success_0"
+                  },
+                  "Empty_Wallpaper": {
+                    "summary": "Empty wallpaper",
+                    "value": {
+                      "data": "",
+                      "errorCoe": 1000,
+                      "errorMsg": "Fail: Empty wallpaper",
+                      "isSuccess": false,
+                      "model": "AS-201",
+                      "rebootRequired": false
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/station/resolution": {
+      "get": {
+        "tags": [
+          "HDMI & VGA"
+        ],
+        "description": "取得解析度設定",
+        "security": [
+          {
+            "ApiKeyAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/userParameter"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "allOf": [
+                    {
+                      "$ref": "#/components/schemas/GeneralResponse"
+                    },
+                    {
+                      "type": "object",
+                      "properties": {
+                        "data": {
+                          "type": "object",
+                          "properties": {
+                            "hdmi": {
+                              "type": "object",
+                              "properties": {
+                                "cec": {
+                                  "type": "string",
+                                  "example": "NA"
+                                },
+                                "resolution": {
+                                  "type": "string",
+                                  "example": "NA"
+                                }
+                              }
+                            },
+                            "vga": {
+                              "type": "object",
+                              "properties": {
+                                "resolution": {
+                                  "type": "string",
+                                  "example": "1920x1080"
+                                }
+                              }
+                            },
+                            "vgaEnable": {
+                              "type": "boolean",
+                              "example": true
+                            },
+                            "output": {
+                              "type": "string",
+                              "example": "1920x1080"
+                            },
+                            "isAudioFromHDMI": {
+                              "type": "boolean",
+                              "example": false
+                            }
+                          }
+                        }
+                      }
+                    }
+                  ]
+                },
+                "examples": {
+                  "Success(Vga)": {
+                    "summary": "Success(Vga)",
+                    "value": {
+                      "data": {
+                        "hdmi": {
+                          "cec": "NA",
+                          "resolution": "NA"
+                        },
+                        "vga": {
+                          "resolution": "1920x1080"
+                        },
+                        "vgaEnable": true,
+                        "output": "1920x1080",
+                        "isAudioFromHDMI": false
+                      },
+                      "errorCode": 0,
+                      "isSuccess": true,
+                      "model": "AS-201",
+                      "rebootRequired": false
+                    }
+                  },
+                  "Success(Hdmi)": {
+                    "summary": "Success(Hdmi)",
+                    "value": {
+                      "data": {
+                        "hdmi": {
+                          "cec": "NA",
+                          "resolution": "Auto"
+                        },
+                        "vga": {
+                          "resolution": "NA"
+                        },
+                        "vgaEnable": false,
+                        "output": "1920x1080",
+                        "isAudioFromHDMI": false
+                      },
+                      "errorCode": 0,
+                      "isSuccess": true,
+                      "model": "AS-201",
+                      "rebootRequired": false
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "HDMI & VGA"
+        ],
+        "description": "變更解析度設定",
+        "security": [
+          {
+            "ApiKeyAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/userParameter"
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ResolutionInfo"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success, reboot required.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GeneralResponse"
+                },
+                "examples": {
+                  "Success": {
+                    "summary": "Success",
+                    "value": {
+                      "data": "",
+                      "errorCode": 0,
+                      "isSuccess": true,
+                      "model": "AS-201",
+                      "rebootRequired": true
+                    }
+                  },
+                  "failed_1100": {
+                    "summary": "The input value is unavailable",
+                    "value": {
+                      "data": "",
+                      "errorCoe": 1100,
+                      "errorMsg": "The input value is unavailable: not in allow_list: [Auto, 3840x2160, 1920x1080, 1280x720, 1024x768, 1920x1200]",
+                      "isSuccess": false,
+                      "model": "AS-201",
+                      "rebootRequired": false
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/station/resolution/list": {
+      "get": {
+        "tags": [
+          "HDMI & VGA"
+        ],
+        "description": "顯示 resolution 清單",
+        "security": [
+          {
+            "ApiKeyAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/userParameter"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "allOf": [
+                    {
+                      "$ref": "#/components/schemas/GeneralResponse"
+                    },
+                    {
+                      "type": "object",
+                      "properties": {
+                        "data": {
+                          "type": "array",
+                          "items": {
+                            "type": "string",
+                            "example": "Auto, 1920x1080, 1280x720, 1024x768"
+                          }
+                        }
+                      }
+                    }
+                  ]
+                },
+                "examples": {
+                  "Success": {
+                    "summary": "Success",
+                    "value": {
+                      "data": [
+                        "Auto",
+                        "1920x1080",
+                        "1280x720",
+                        "1024x768"
+                      ],
+                      "errorCode": 0,
+                      "isSuccess": true,
+                      "model": "AS-201",
+                      "rebootRequired": false
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/station/time": {
+      "get": {
+        "tags": [
+          "DateTime"
+        ],
+        "description": "取得時間設定",
+        "security": [
+          {
+            "ApiKeyAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/userParameter"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "allOf": [
+                    {
+                      "$ref": "#/components/schemas/GeneralResponse"
+                    },
+                    {
+                      "type": "object",
+                      "properties": {
+                        "data": {
+                          "allOf": [
+                            {
+                              "$ref": "#/components/schemas/TimeInfo"
+                            },
+                            {
+                              "type": "object",
+                              "properties": {
+                                "GMT": {
+                                  "type": "integer",
+                                  "format": "int32",
+                                  "example": 8,
+                                  "description": "check timezone"
+                                },
+                                "curTimeMillis": {
+                                  "type": "integer",
+                                  "format": "int64",
+                                  "example": 1686562576700
+                                },
+                                "inDaylightTime": {
+                                  "type": "boolean",
+                                  "example": false
+                                }
+                              }
+                            }
+                          ]
+                        }
+                      }
+                    }
+                  ]
+                },
+                "examples": {
+                  "Success": {
+                    "summary": "Success",
+                    "value": {
+                      "data": {
+                        "GMT": 8,
+                        "curTimeMillis": 1686562576700,
+                        "dailyRebootTime": "02:00",
+                        "inDaylightTime": false,
+                        "isAutoTime": true,
+                        "isDailyReboot": true,
+                        "ntpServer": "ntp.nict.jp",
+                        "showTime24": false,
+                        "timeZone": "Asia/Taipei",
+                        "timeout": 5000
+                      },
+                      "errorCode": 0,
+                      "isSuccess": true,
+                      "model": "AS-201",
+                      "rebootRequired": false
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "patch": {
+        "tags": [
+          "DateTime"
+        ],
+        "description": "修改部分時間設定",
+        "security": [
+          {
+            "ApiKeyAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/userParameter"
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/TimeInfo"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GeneralResponse"
+                },
+                "examples": {
+                  "Success": {
+                    "$ref": "#/components/examples/success_0"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/station/wifi": {
+      "get": {
+        "tags": [
+          "Wi-Fi"
+        ],
+        "description": "取得 Wi-Fi 設定",
+        "security": [
+          {
+            "ApiKeyAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/userParameter"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "allOf": [
+                    {
+                      "$ref": "#/components/schemas/GeneralResponse"
+                    },
+                    {
+                      "type": "object",
+                      "properties": {
+                        "data": {
+                          "allOf": [
+                            {
+                              "$ref": "#/components/schemas/WifiSettingInfo"
+                            },
+                            {
+                              "type": "object",
+                              "properties": {
+                                "ssid": {
+                                  "type": "string",
+                                  "example": "AS201-0024",
+                                  "pattern": "^[A-Za-z\\d\\-]{1,16}$"
+                                },
+                                "mac": {
+                                  "type": "string",
+                                  "example": "5c:f3:70:b1:df:71"
+                                }
+                              }
+                            }
+                          ]
+                        }
+                      }
+                    }
+                  ]
+                },
+                "examples": {
+                  "Success_off": {
+                    "summary": "Success(Off)",
+                    "value": {
+                      "data": {
+                        "mac": "5c:f3:70:b1:df:71",
+                        "mode": 0
+                      },
+                      "errorCode": 0,
+                      "isSuccess": true,
+                      "model": "AS-201",
+                      "rebootRequired": false
+                    }
+                  },
+                  "Success_ap": {
+                    "summary": "Success(Ap)",
+                    "value": {
+                      "data": {
+                        "mac": "5c:f3:70:b1:df:71",
+                        "mode": 0,
+                        "ssid": "AS201-0024",
+                        "hideSSID": false,
+                        "security": 0,
+                        "band": 1,
+                        "networkMode": 0,
+                        "gatekeeper": 0
+                      },
+                      "errorCode": 0,
+                      "isSuccess": true,
+                      "model": "AS-201",
+                      "rebootRequired": false
+                    }
+                  },
+                  "Success_another_ap": {
+                    "summary": "Success(Another Ap)",
+                    "value": {
+                      "data": {
+                        "mac": "5c:f3:70:b1:df:71",
+                        "mode": 2
+                      },
+                      "errorCode": 0,
+                      "isSuccess": true,
+                      "model": "AS-201",
+                      "rebootRequired": false
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "patch": {
+        "tags": [
+          "Wi-Fi"
+        ],
+        "description": "修改部分 Wi-Fi 設定",
+        "security": [
+          {
+            "ApiKeyAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/userParameter"
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/WifiSettingInfo"
+              },
+              "examples": {
+                "wifi_ap": {
+                  "summary": "AP",
+                  "value": {
+                    "mode": 1,
+                    "hideSSID": false,
+                    "security": 0,
+                    "band": 1,
+                    "networkMode": 0,
+                    "gatekeeper": 0
+                  }
+                },
+                "wifi_ap_wpa2": {
+                  "summary": "AP choose WPA2",
+                  "value": {
+                    "mode": 1,
+                    "hideSSID": false,
+                    "security": 1,
+                    "password": "123456789",
+                    "band": 1,
+                    "networkMode": 0,
+                    "gatekeeper": 0
+                  }
+                },
+                "wifi_another_ap": {
+                  "summary": "Another AP",
+                  "value": {
+                    "mode": 2
+                  }
+                },
+                "wifi_off": {
+                  "summary": "Wifi OFF",
+                  "value": {
+                    "mode": 0
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GeneralResponse"
+                },
+                "examples": {
+                  "Success": {
+                    "$ref": "#/components/examples/success_0"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/station/wifi/list": {
+      "get": {
+        "tags": [
+          "Wi-Fi"
+        ],
+        "description": "顯示 Wi-Fi 清單，僅選擇 Other AP 模式才會出現",
+        "security": [
+          {
+            "ApiKeyAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/userParameter"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "allOf": [
+                    {
+                      "$ref": "#/components/schemas/GeneralResponse"
+                    },
+                    {
+                      "type": "object",
+                      "properties": {
+                        "data": {
+                          "$ref": "#/components/schemas/WifiList"
+                        }
+                      }
+                    }
+                  ]
+                },
+                "examples": {
+                  "another_ap": {
+                    "summary": "Success(another AP mode)",
+                    "value": {
+                      "data": [
+                        {
+                          "level": 4,
+                          "security": "WPA2 PSK",
+                          "ssid": "Astrogate_2.4G",
+                          "status": "saved"
+                        },
+                        {
+                          "level": 3,
+                          "security": "WEP",
+                          "ssid": "A3002MU",
+                          "status": ""
+                        },
+                        {
+                          "level": 2,
+                          "security": "None",
+                          "ssid": "AS201-005b",
+                          "status": ""
+                        },
+                        {
+                          "level": 1,
+                          "security": "None",
+                          "ssid": "AS201-0036",
+                          "status": ""
+                        },
+                        {
+                          "level": 0,
+                          "security": "None",
+                          "ssid": "Venus",
+                          "status": ""
+                        }
+                      ],
+                      "errorCode": 0,
+                      "isSuccess": true,
+                      "model": "AS-201",
+                      "rebootRequired": false
+                    }
+                  },
+                  "not_another_ap": {
+                    "summary": "Success(Not another AP mode)",
+                    "value": {
+                      "data": [],
+                      "errorCode": 0,
+                      "isSuccess": true,
+                      "model": "AS-201",
+                      "rebootRequired": false
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/station/wifi/connection": {
+      "get": {
+        "tags": [
+          "Wi-Fi"
+        ],
+        "description": "顯示 Wi-Fi 連線資訊，僅選擇 Other AP 模式且有連線 Wi-Fi 才會出現",
+        "security": [
+          {
+            "ApiKeyAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/userParameter"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "allOf": [
+                    {
+                      "$ref": "#/components/schemas/GeneralResponse"
+                    },
+                    {
+                      "type": "object",
+                      "properties": {
+                        "data": {
+                          "allOf": [
+                            {
+                              "type": "object",
+                              "properties": {
+                                "connected": {
+                                  "type": "boolean",
+                                  "example": true
+                                },
+                                "freq": {
+                                  "type": "integer",
+                                  "format": "int32",
+                                  "example": 5220
+                                },
+                                "isHide": {
+                                  "type": "boolean",
+                                  "example": false
+                                },
+                                "mac": {
+                                  "type": "string",
+                                  "example": "5c:f3:70:b1:df:71"
+                                },
+                                "speed": {
+                                  "type": "integer",
+                                  "format": "int32",
+                                  "example": 867
+                                },
+                                "level": {
+                                  "type": "integer",
+                                  "format": "int32",
+                                  "example": 4,
+                                  "description": "signal strength.",
+                                  "enum": [
+                                    0,
+                                    1,
+                                    2,
+                                    3,
+                                    4
+                                  ]
+                                },
+                                "security": {
+                                  "type": "string",
+                                  "example": "WPA2 PSK",
+                                  "description": "wireless authentication method."
+                                },
+                                "ssid": {
+                                  "type": "string",
+                                  "example": "Astrogate_5G",
+                                  "pattern": "^[A-Za-z\\d\\-]{1,16}$"
+                                }
+                              }
+                            },
+                            {
+                              "$ref": "#/components/schemas/StaticIPConfiguration"
+                            }
+                          ]
+                        }
+                      }
+                    }
+                  ]
+                },
+                "examples": {
+                  "no_connected": {
+                    "summary": "Success(no connected)",
+                    "value": {
+                      "data": {
+                        "connected": false
+                      },
+                      "errorCode": 0,
+                      "isSuccess": true,
+                      "model": "AS-201",
+                      "rebootRequired": false
+                    }
+                  },
+                  "connected": {
+                    "summary": "Success(connected)",
+                    "value": {
+                      "data": {
+                        "connected": true,
+                        "ip": "192.168.125.153",
+                        "mask": "255.255.255.0",
+                        "gateway": "192.168.125.1",
+                        "dns1": "168.95.1.1",
+                        "dns2": "8.8.8.8",
+                        "freq": 5220,
+                        "isHide": "false,",
+                        "mac": "5c:f3:70:b1:df:71",
+                        "speed": 867,
+                        "level": 4,
+                        "security": "WPA2 PSK",
+                        "ssid": "Astrogate_2.4G"
+                      },
+                      "errorCode": 0,
+                      "isSuccess": true,
+                      "model": "AS-201",
+                      "rebootRequired": false
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "Wi-Fi"
+        ],
+        "description": "手動新增 Wi-Fi 連線資訊，僅選擇 Other AP 模式才會出現",
+        "security": [
+          {
+            "ApiKeyAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/userParameter"
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/WifiConnectionInfo"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GeneralResponse"
+                },
+                "examples": {
+                  "success_0": {
+                    "$ref": "#/components/examples/success_0"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "patch": {
+        "tags": [
+          "Wi-Fi"
+        ],
+        "description": "從 Wi-Fi 清單點選 ssid 連線，僅選擇 Other AP 模式才會出現",
+        "security": [
+          {
+            "ApiKeyAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/userParameter"
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/WifiConnectionInfo"
+              },
+              "examples": {
+                "success_0": {
+                  "summary": "Connect Astrogate_5G",
+                  "value": {
+                    "ssid": "Astrogate_5G",
+                    "password": 83566024,
+                    "isStaticIp": false,
+                    "ip": "",
+                    "mask": "",
+                    "gateway": "",
+                    "dns1": "",
+                    "dns2": "",
+                    "reconnect": true
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GeneralResponse"
+                },
+                "examples": {
+                  "success_0": {
+                    "$ref": "#/components/examples/success_0"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Wi-Fi"
+        ],
+        "description": "忘記 Wi-Fi 連線，僅選擇 Other AP 模式且有連線 Wi-Fi 才會出現",
+        "security": [
+          {
+            "ApiKeyAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "ssid",
+            "example": "Astrogate_5G",
+            "in": "query",
+            "required": true,
+            "description": "Use ssid name",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "$ref": "#/components/parameters/userParameter"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GeneralResponse"
+                },
+                "examples": {
+                  "success_0": {
+                    "$ref": "#/components/examples/success_0"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/station/ethernet": {
+      "get": {
+        "tags": [
+          "Ethernet"
+        ],
+        "description": "取得 Ethernet 設定",
+        "security": [
+          {
+            "ApiKeyAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/userParameter"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "allOf": [
+                    {
+                      "$ref": "#/components/schemas/GeneralResponse"
+                    },
+                    {
+                      "type": "object",
+                      "properties": {
+                        "data": {
+                          "allOf": [
+                            {
+                              "type": "object",
+                              "properties": {
+                                "connected": {
+                                  "type": "boolean",
+                                  "example": true,
+                                  "description": "若 Wi-Fi 選擇橋接模式，需要該欄位判斷後續行為"
+                                },
+                                "enableDHCP": {
+                                  "type": "boolean",
+                                  "example": false,
+                                  "description": "DHCP or Static ip"
+                                },
+                                "mac": {
+                                  "type": "string",
+                                  "example": "5c:f3:70:b1:df:71"
+                                },
+                                "setting": {
+                                  "$ref": "#/components/schemas/StaticIPConfiguration"
+                                }
+                              }
+                            }
+                          ]
+                        }
+                      }
+                    }
+                  ]
+                },
+                "examples": {
+                  "Success": {
+                    "summary": "Success",
+                    "value": {
+                      "data": {
+                        "connected": true,
+                        "enableDHCP": true,
+                        "mac": "5c:f3:70:b1:df:71",
+                        "setting": {
+                          "ip": "192.168.125.153",
+                          "mask": "255.255.255.0",
+                          "gateway": "192.168.125.1",
+                          "dns1": "168.95.1.1",
+                          "dns2": "8.8.8.8"
+                        }
+                      },
+                      "errorCode": 0,
+                      "isSuccess": true,
+                      "model": "AS-201",
+                      "rebootRequired": false
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "patch": {
+        "tags": [
+          "Ethernet"
+        ],
+        "description": "變更 Ethernet 設定",
+        "security": [
+          {
+            "ApiKeyAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/userParameter"
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/EthernetInfo"
+              },
+              "examples": {
+                "Setting_DHCP": {
+                  "summary": "Setting DHCP",
+                  "value": {
+                    "enableDHCP": true
+                  }
+                },
+                "Setting_static": {
+                  "summary": "Setting static",
+                  "value": {
+                    "enableDHCP": false,
+                    "ip": "192.168.125.153",
+                    "mask": "255.255.255.0",
+                    "gateway": "192.168.125.1",
+                    "dns1": "168.95.1.1",
+                    "dns2": "8.8.8.8"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GeneralResponse"
+                },
+                "examples": {
+                  "success_0": {
+                    "$ref": "#/components/examples/success_0"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/station/firmware": {
+      "get": {
+        "tags": [
+          "Update"
+        ],
+        "description": "取得韌體版號",
+        "security": [
+          {
+            "ApiKeyAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/userParameter"
+          },
+          {
+            "name": "hasNew",
+            "in": "query",
+            "description": "true 時檢查 OTA 更新，其餘僅顯示版號",
+            "schema": {
+              "type": "boolean"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "allOf": [
+                    {
+                      "$ref": "#/components/schemas/GeneralResponse"
+                    },
+                    {
+                      "type": "object",
+                      "properties": {
+                        "data": {
+                          "type": "object",
+                          "properties": {
+                            "current": {
+                              "type": "string",
+                              "description": "當前版號",
+                              "example": "2.2.1.281(20230512)"
+                            },
+                            "new": {
+                              "type": "string",
+                              "description": "none(Already latest), unknown(Unexpected error)",
+                              "example": "2.2.1.277(20230417)"
+                            }
+                          }
+                        }
+                      }
+                    }
+                  ]
+                },
+                "examples": {
+                  "Success_getFW": {
+                    "summary": "Success(Get FW version)",
+                    "value": {
+                      "data": "2.2.1.281(20230512)",
+                      "errorCode": 0,
+                      "isSuccess": true,
+                      "model": "AS-201",
+                      "rebootRequired": false
+                    }
+                  },
+                  "Success_hasNew_none": {
+                    "summary": "Success(No new version)",
+                    "value": {
+                      "data": {
+                        "current": "2.2.1.281(20230512)",
+                        "new": "none"
+                      },
+                      "errorCode": 0,
+                      "isSuccess": true,
+                      "model": "AS-201",
+                      "rebootRequired": false
+                    }
+                  },
+                  "Success_hasNew_true": {
+                    "summary": "Success(Has new version)",
+                    "value": {
+                      "data": {
+                        "current": "2.2.1.281(20230512)",
+                        "new": "2.2.1.277(20230417)"
+                      },
+                      "errorCode": 0,
+                      "isSuccess": true,
+                      "model": "AS-201",
+                      "rebootRequired": false
+                    }
+                  },
+                  "Success_hasNew_unknown": {
+                    "summary": "Success(unknown error)",
+                    "value": {
+                      "data": {
+                        "current": "2.2.1.281(20230512)",
+                        "new": "unknown"
+                      },
+                      "errorCode": 0,
+                      "isSuccess": true,
+                      "model": "AS-201",
+                      "rebootRequired": false
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "Update"
+        ],
+        "description": "手動更新和遠端更新都是同一支 API，僅以 isManual 變數控制",
+        "security": [
+          {
+            "ApiKeyAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/userParameter"
+          },
+          {
+            "name": "isManual",
+            "in": "query",
+            "required": true,
+            "description": "true 時手動更新，false 則遠端更新",
+            "schema": {
+              "type": "boolean"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GeneralResponse"
+                },
+                "examples": {
+                  "Success_0": {
+                    "$ref": "#/components/examples/success_0"
+                  },
+                  "Success_local_no_file": {
+                    "summary": "Success(No local file)",
+                    "value": {
+                      "data": false,
+                      "errorCode": 0,
+                      "isSuccess": true,
+                      "model": "AS-201",
+                      "rebootRequired": false
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/station/firmware/download/start": {
+      "put": {
+        "tags": [
+          "Update"
+        ],
+        "description": "開始遠端 OTA 下載",
+        "security": [
+          {
+            "ApiKeyAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/userParameter"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "allOf": [
+                    {
+                      "$ref": "#/components/schemas/GeneralResponse"
+                    },
+                    {
+                      "type": "object",
+                      "properties": {
+                        "data": {
+                          "type": "object",
+                          "properties": {
+                            "process": {
+                              "type": "string",
+                              "description": "進度百分比",
+                              "minimum": 0,
+                              "maximum": 100
+                            },
+                            "status": {
+                              "type": "integer",
+                              "description": "-1:失敗, 1:下載中, 2:下載完成",
+                              "example": 1,
+                              "enum": [
+                                -1,
+                                1,
+                                2
+                              ]
+                            }
+                          }
+                        }
+                      }
+                    }
+                  ]
+                },
+                "examples": {
+                  "Success_down_fail": {
+                    "summary": "Success(Download Failed)",
+                    "value": {
+                      "data": {
+                        "process": 0,
+                        "status": -1
+                      },
+                      "errorCode": 0,
+                      "isSuccess": true,
+                      "model": "AS-201",
+                      "rebootRequired": false
+                    }
+                  },
+                  "Success_down_doing": {
+                    "summary": "Success(Downloading)",
+                    "value": {
+                      "data": {
+                        "process": 12,
+                        "status": 1
+                      },
+                      "errorCode": 0,
+                      "isSuccess": true,
+                      "model": "AS-201",
+                      "rebootRequired": false
+                    }
+                  },
+                  "Success_down_finish": {
+                    "summary": "Success(Download Finished)",
+                    "value": {
+                      "data": {
+                        "process": 100,
+                        "status": 2
+                      },
+                      "errorCode": 0,
+                      "isSuccess": true,
+                      "model": "AS-201",
+                      "rebootRequired": false
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/station/firmware/download/stop": {
+      "put": {
+        "tags": [
+          "Update"
+        ],
+        "description": "停止遠端 OTA 下載",
+        "security": [
+          {
+            "ApiKeyAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/userParameter"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GeneralResponse"
+                },
+                "examples": {
+                  "success_0": {
+                    "$ref": "#/components/examples/success_0"
+                  },
+                  "Success_nothing_download": {
+                    "summary": "Success(Not downloading file)",
+                    "value": {
+                      "data": "",
+                      "errorCoe": 1000,
+                      "errorMsg": "Fail: Nothing happened",
+                      "isSuccess": false,
+                      "model": "AS-201",
+                      "rebootRequired": false
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/station/ota/check": {
+      "get": {
+        "tags": [
+          "Update"
+        ],
+        "description": "檢查 OTA 檔案有沒有下載到本地端",
+        "security": [
+          {
+            "ApiKeyAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/userParameter"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GeneralResponse"
+                },
+                "examples": {
+                  "success_0": {
+                    "$ref": "#/components/examples/success_0"
+                  },
+                  "Success_local_no_file": {
+                    "summary": "Success(No local file)",
+                    "value": {
+                      "data": false,
+                      "errorCode": 0,
+                      "isSuccess": true,
+                      "model": "AS-201",
+                      "rebootRequired": false
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/station/admin/password": {
+      "put": {
+        "tags": [
+          "Password"
+        ],
+        "description": "變更 admin 密碼",
+        "security": [
+          {
+            "ApiKeyAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/userParameter"
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/PasswordInfo"
+              },
+              "examples": {
+                "change_password": {
+                  "summary": "Change password",
+                  "value": {
+                    "old": "admin",
+                    "new": "admin233",
+                    "confirm": "admin233"
+                  }
+                },
+                "init_password": {
+                  "summary": "Change default password",
+                  "description": "初次進入 station 畫面，需要重設密碼。該行為不用 X-API-KEY 和 username，且無法在 swagger 測試",
+                  "value": {
+                    "new": "admin233"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GeneralResponse"
+                },
+                "examples": {
+                  "success_0": {
+                    "$ref": "#/components/examples/success_0"
+                  },
+                  "failed_1100_new_confirm_not_match": {
+                    "summary": "New & Confirm Password do not match",
+                    "value": {
+                      "data": "",
+                      "errorCoe": 1100,
+                      "errorMsg": "The input value is unavailable: passwords do not match",
+                      "isSuccess": false,
+                      "model": "AS-201",
+                      "rebootRequired": false
+                    }
+                  },
+                  "failed_1100_current_error": {
+                    "summary": "Current password is wrong",
+                    "value": {
+                      "data": "",
+                      "errorCoe": 1100,
+                      "errorMsg": "The input value is unavailable: current password is wrong",
+                      "isSuccess": false,
+                      "model": "AS-201",
+                      "rebootRequired": false
+                    }
+                  },
+                  "failed_1100_pattern": {
+                    "summary": "Not matches the pattern",
+                    "value": {
+                      "data": "",
+                      "errorCoe": 1100,
+                      "errorMsg": "The input value is unavailable: not matches the pattern: ^[A-Za-z0-9]{1,16}$",
+                      "isSuccess": false,
+                      "model": "AS-201",
+                      "rebootRequired": false
+                    }
+                  },
+                  "failed_1100_the_same": {
+                    "summary": "Current password & new password are the same",
+                    "value": {
+                      "data": "",
+                      "errorCoe": 1100,
+                      "errorMsg": "The input value is unavailable: current password & new password are the same",
+                      "isSuccess": false,
+                      "model": "AS-201",
+                      "rebootRequired": false
+                    }
+                  },
+                  "failed_1100_init_pass": {
+                    "summary": "(init) New password cannot use the preset password",
+                    "value": {
+                      "data": "",
+                      "errorCoe": 1100,
+                      "errorMsg": "The input value is unavailable: New password cannot use the preset password",
+                      "isSuccess": false,
+                      "model": "AS-201",
+                      "rebootRequired": false
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/station/moderation/password": {
+      "put": {
+        "tags": [
+          "Password"
+        ],
+        "description": "變更 moderation 密碼",
+        "security": [
+          {
+            "ApiKeyAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/userParameter"
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/PasswordInfo"
+              },
+              "examples": {
+                "change_password": {
+                  "summary": "Change password",
+                  "value": {
+                    "old": "moderator",
+                    "new": "moderator233",
+                    "confirm": "moderator233"
+                  }
+                },
+                "init_password": {
+                  "summary": "Change default password",
+                  "description": "初次進入 station 畫面，需要重設密碼。該行為不用 X-API-KEY 和 username，且無法在 swagger 測試",
+                  "value": {
+                    "new": "moderator233"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GeneralResponse"
+                },
+                "examples": {
+                  "success_0": {
+                    "$ref": "#/components/examples/success_0"
+                  },
+                  "failed_1100_new_confirm_not_match": {
+                    "summary": "New & Confirm Password do not match",
+                    "value": {
+                      "data": "",
+                      "errorCoe": 1100,
+                      "errorMsg": "The input value is unavailable: passwords do not match",
+                      "isSuccess": false,
+                      "model": "AS-201",
+                      "rebootRequired": false
+                    }
+                  },
+                  "failed_1100_current_error": {
+                    "summary": "Current password is wrong",
+                    "value": {
+                      "data": "",
+                      "errorCoe": 1100,
+                      "errorMsg": "The input value is unavailable: current password is wrong",
+                      "isSuccess": false,
+                      "model": "AS-201",
+                      "rebootRequired": false
+                    }
+                  },
+                  "failed_1100_pattern": {
+                    "summary": "Not matches the pattern",
+                    "value": {
+                      "data": "",
+                      "errorCoe": 1100,
+                      "errorMsg": "The input value is unavailable: not matches the pattern: ^[A-Za-z0-9]{1,16}$",
+                      "isSuccess": false,
+                      "model": "AS-201",
+                      "rebootRequired": false
+                    }
+                  },
+                  "failed_1100_the_same": {
+                    "summary": "Current password & new password are the same",
+                    "value": {
+                      "data": "",
+                      "errorCoe": 1100,
+                      "errorMsg": "The input value is unavailable: current password & new password are the same",
+                      "isSuccess": false,
+                      "model": "AS-201",
+                      "rebootRequired": false
+                    }
+                  },
+                  "failed_1100_init_pass": {
+                    "summary": "(init) New password cannot use the preset password",
+                    "value": {
+                      "data": "",
+                      "errorCoe": 1100,
+                      "errorMsg": "The input value is unavailable: New password cannot use the preset password",
+                      "isSuccess": false,
+                      "model": "AS-201",
+                      "rebootRequired": false
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/station/pod/pairing": {
+      "get": {
+        "tags": [
+          "Pod"
+        ],
+        "description": "取得Pod配對的設定",
+        "security": [
+          {
+            "ApiKeyAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/userParameter"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "allOf": [
+                    {
+                      "$ref": "#/components/schemas/GeneralResponse"
+                    },
+                    {
+                      "type": "object",
+                      "properties": {
+                        "data": {
+                          "$ref": "#/components/schemas/PodInfo"
+                        }
+                      }
+                    }
+                  ]
+                },
+                "examples": {
+                  "Success_0": {
+                    "summary": "Success > 預設 this station",
+                    "value": {
+                      "data": {
+                        "mode": 0,
+                        "ip": "192.168.125.176",
+                        "ssid": "AS201-0024",
+                        "security": 0,
+                        "password": ""
+                      },
+                      "errorCode": 0,
+                      "isSuccess": true,
+                      "model": "AS-201",
+                      "rebootRequired": false
+                    }
+                  },
+                  "Success_1": {
+                    "summary": "Success > other 非 WPA2",
+                    "value": {
+                      "data": {
+                        "mode": 1,
+                        "ip": "192.168.125.176",
+                        "ssid": "Astrogate_Unknown",
+                        "security": 0,
+                        "password": ""
+                      },
+                      "errorCode": 0,
+                      "isSuccess": true,
+                      "model": "AS-201",
+                      "rebootRequired": false
+                    }
+                  },
+                  "Success_2": {
+                    "summary": "Success > other 且 WPA2",
+                    "value": {
+                      "data": {
+                        "mode": 1,
+                        "ip": "192.168.125.176",
+                        "ssid": "Astrogate_Unknown",
+                        "security": 1,
+                        "password": "qwer!!test"
+                      },
+                      "errorCode": 0,
+                      "isSuccess": true,
+                      "model": "AS-201",
+                      "rebootRequired": false
+                    }
+                  },
+                  "failed_1001": {
+                    "$ref": "#/components/examples/failed_1001"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "patch": {
+        "tags": [
+          "Pod"
+        ],
+        "description": "設定Pod配對的狀態",
+        "security": [
+          {
+            "ApiKeyAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/userParameter"
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/PodInfo"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GeneralResponse"
+                },
+                "examples": {
+                  "Success": {
+                    "summary": "Success",
+                    "value": {
+                      "data": "",
+                      "errorCode": 0,
+                      "isSuccess": true,
+                      "model": "AS-201",
+                      "rebootRequired": true
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/station/service": {
+      "get": {
+        "tags": [
+          "MirroringService"
+        ],
+        "description": "取得所有投影功能的啟用狀態",
+        "security": [
+          {
+            "ApiKeyAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/userParameter"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "allOf": [
+                    {
+                      "$ref": "#/components/schemas/GeneralResponse"
+                    },
+                    {
+                      "type": "object",
+                      "properties": {
+                        "data": {
+                          "$ref": "#/components/schemas/ServiceInfo"
+                        }
+                      }
+                    }
+                  ]
+                },
+                "examples": {
+                  "Success": {
+                    "summary": "Success",
+                    "value": {
+                      "data": {
+                        "allowMiracast": false,
+                        "allowGoogleCast": true,
+                        "allowAirPlay": true
+                      },
+                      "errorCode": 0,
+                      "isSuccess": true,
+                      "model": "AS-201",
+                      "rebootRequired": false
+                    }
+                  },
+                  "failed_1001": {
+                    "$ref": "#/components/examples/failed_1001"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "patch": {
+        "tags": [
+          "MirroringService"
+        ],
+        "description": "設定投影功能的啟用狀態",
+        "security": [
+          {
+            "ApiKeyAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/userParameter"
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ServiceInfo"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GeneralResponse"
+                },
+                "examples": {
+                  "Success": {
+                    "summary": "Success",
+                    "value": {
+                      "data": "",
+                      "errorCode": 0,
+                      "isSuccess": true,
+                      "model": "AS-201",
+                      "rebootRequired": true
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/station/system/reset": {
+      "post": {
+        "tags": [
+          "System"
+        ],
+        "description": "設定將會重置回出廠值，但韌體版本不會重置",
+        "security": [
+          {
+            "ApiKeyAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/userParameter"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GeneralResponse"
+                },
+                "examples": {
+                  "Success": {
+                    "summary": "Success",
+                    "value": {
+                      "data": "",
+                      "errorCode": 0,
+                      "isSuccess": true,
+                      "model": "AS-201",
+                      "rebootRequired": true
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/station/system/log/switch": {
+      "get": {
+        "tags": [
+          "System"
+        ],
+        "description": "取得系統日誌下載狀態",
+        "security": [
+          {
+            "ApiKeyAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/userParameter"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "allOf": [
+                    {
+                      "$ref": "#/components/schemas/GeneralResponse"
+                    },
+                    {
+                      "type": "object",
+                      "properties": {
+                        "data": {
+                          "type": "object",
+                          "properties": {
+                            "switch": {
+                              "type": "boolean",
+                              "example": false
+                            }
+                          }
+                        }
+                      }
+                    }
+                  ]
+                },
+                "examples": {
+                  "Success": {
+                    "summary": "Success",
+                    "value": {
+                      "data": {
+                        "switch": false
+                      },
+                      "errorCode": 0,
+                      "isSuccess": true,
+                      "model": "AS-201",
+                      "rebootRequired": false
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "System"
+        ],
+        "description": "啟用系統日誌下載",
+        "security": [
+          {
+            "ApiKeyAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/userParameter"
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "switch": {
+                    "type": "boolean",
+                    "example": false,
+                    "enum": [
+                      true,
+                      false
+                    ]
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GeneralResponse"
+                },
+                "examples": {
+                  "success_0": {
+                    "$ref": "#/components/examples/success_0"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/station/system/log": {
+      "get": {
+        "tags": [
+          "System"
+        ],
+        "description": "取得系統日誌資訊與下載進度",
+        "security": [
+          {
+            "ApiKeyAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/userParameter"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "allOf": [
+                    {
+                      "$ref": "#/components/schemas/GeneralResponse"
+                    },
+                    {
+                      "type": "object",
+                      "properties": {
+                        "data": {
+                          "type": "object",
+                          "properties": {
+                            "statusLog": {
+                              "type": "integer",
+                              "format": "int32",
+                              "example": 0,
+                              "description": "0(Not downloaded yet), 1(Downloading), 2(Download finished)",
+                              "enum": [
+                                0,
+                                1,
+                                2
+                              ]
+                            },
+                            "filePath": {
+                              "type": "string",
+                              "example": "AS201-0024-230425153939.log"
+                            }
+                          }
+                        }
+                      }
+                    }
+                  ]
+                },
+                "examples": {
+                  "Success_not_download": {
+                    "summary": "Success(Not downloaded yet)",
+                    "value": {
+                      "data": {
+                        "statusLog": 0
+                      },
+                      "errorCode": 0,
+                      "isSuccess": true,
+                      "model": "AS-201",
+                      "rebootRequired": false
+                    }
+                  },
+                  "Success_downloading": {
+                    "summary": "Success(Downloading)",
+                    "value": {
+                      "data": {
+                        "statusLog": 1,
+                        "filePath": "AS201-0024-230425153939.log"
+                      },
+                      "errorCode": 0,
+                      "isSuccess": true,
+                      "model": "AS-201",
+                      "rebootRequired": false
+                    }
+                  },
+                  "Success_download_finish": {
+                    "summary": "Success(Download finished)",
+                    "value": {
+                      "data": {
+                        "statusLog": 2,
+                        "filePath": "AS201-0024-230425153939.log"
+                      },
+                      "errorCode": 0,
+                      "isSuccess": true,
+                      "model": "AS-201",
+                      "rebootRequired": false
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "System"
+        ],
+        "description": "下載系統日誌到 Station 指定資料夾",
+        "security": [
+          {
+            "ApiKeyAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/userParameter"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GeneralResponse"
+                },
+                "examples": {
+                  "Success": {
+                    "$ref": "#/components/examples/success_0"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/station/system/config": {
+      "get": {
+        "tags": [
+          "System"
+        ],
+        "description": "取得設定檔檔名",
+        "security": [
+          {
+            "ApiKeyAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/userParameter"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GeneralResponse"
+                },
+                "examples": {
+                  "Success": {
+                    "summary": "Success",
+                    "value": {
+                      "data": "AS201-0024_Profile.config",
+                      "errorCode": 0,
+                      "isSuccess": true,
+                      "model": "AS-201",
+                      "rebootRequired": false
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "System"
+        ],
+        "description": "匯入設定檔",
+        "security": [
+          {
+            "ApiKeyAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/userParameter"
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "multipart/form-data": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "fileName": {
+                    "type": "string",
+                    "format": "binary"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GeneralResponse"
+                },
+                "examples": {
+                  "Success": {
+                    "summary": "Success",
+                    "value": {
+                      "data": "",
+                      "errorCode": 0,
+                      "isSuccess": true,
+                      "model": "AS-201",
+                      "rebootRequired": true
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/station/power/setting": {
+      "get": {
+        "tags": [
+          "Power"
+        ],
+        "description": "取得節能設定",
+        "security": [
+          {
+            "ApiKeyAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/userParameter"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "allOf": [
+                    {
+                      "$ref": "#/components/schemas/GeneralResponse"
+                    },
+                    {
+                      "type": "object",
+                      "properties": {
+                        "data": {
+                          "$ref": "#/components/schemas/PowerInfo"
+                        }
+                      }
+                    }
+                  ]
+                },
+                "examples": {
+                  "Success_sleep": {
+                    "summary": "Success(Sleep mode)",
+                    "value": {
+                      "data": {
+                        "mode": 0,
+                        "time": -1
+                      },
+                      "errorCode": 0,
+                      "isSuccess": true,
+                      "model": "AS-201",
+                      "rebootRequired": false
+                    }
+                  },
+                  "Success_suspend": {
+                    "summary": "Success(Suspend mode)",
+                    "value": {
+                      "data": {
+                        "mode": 1
+                      },
+                      "errorCode": 0,
+                      "isSuccess": true,
+                      "model": "AS-201",
+                      "rebootRequired": false
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "patch": {
+        "tags": [
+          "Power"
+        ],
+        "description": "修改部分節能設定",
+        "security": [
+          {
+            "ApiKeyAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/userParameter"
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/PowerInfo"
+              },
+              "examples": {
+                "sleep_mode": {
+                  "summary": "Sleep mode",
+                  "value": {
+                    "mode": 0,
+                    "time": -1
+                  }
+                },
+                "suspend_mode": {
+                  "summary": "Suspend mode",
+                  "value": {
+                    "mode": 1
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GeneralResponse"
+                },
+                "examples": {
+                  "Success": {
+                    "$ref": "#/components/examples/success_0"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/station/remote/amsName": {
+      "get": {
+        "tags": [
+          "RemoteControl"
+        ],
+        "description": "取得 ASTROS Manager Server",
+        "security": [
+          {
+            "ApiKeyAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/userParameter"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GeneralResponse"
+                },
+                "examples": {
+                  "Success": {
+                    "summary": "Success",
+                    "value": {
+                      "data": "AstrogateMGM",
+                      "errorCode": 0,
+                      "isSuccess": true,
+                      "model": "AS-201",
+                      "rebootRequired": false
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "RemoteControl"
+        ],
+        "description": "變更 ASTROS Manager Server",
+        "security": [
+          {
+            "ApiKeyAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/userParameter"
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "amsName": {
+                    "type": "string",
+                    "example": "AstrogateMGM233"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GeneralResponse"
+                },
+                "examples": {
+                  "success_0": {
+                    "$ref": "#/components/examples/success_0"
+                  },
+                  "failed_1100": {
+                    "summary": "The input value is unavailable",
+                    "value": {
+                      "data": "",
+                      "errorCoe": 1100,
+                      "errorMsg": "The input value is unavailable: not matches the pattern: ^[A-Za-z\\d\\-]{1,16}$",
+                      "isSuccess": false,
+                      "model": "AS-201",
+                      "rebootRequired": false
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/station/remote/apikey": {
+      "get": {
+        "tags": [
+          "RemoteControl"
+        ],
+        "description": "取得 API token",
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "allOf": [
+                    {
+                      "$ref": "#/components/schemas/GeneralResponse"
+                    },
+                    {
+                      "type": "object",
+                      "properties": {
+                        "data": {
+                          "type": "object",
+                          "properties": {
+                            "token": {
+                              "type": "string",
+                              "example": "IAgSdBJ0IpjXdCgJ"
+                            }
+                          }
+                        }
+                      }
+                    }
+                  ]
+                },
+                "examples": {
+                  "Success": {
+                    "summary": "Success",
+                    "value": {
+                      "data": {
+                        "token": "IAgSdBJ0IpjXdCgJ"
+                      },
+                      "errorCode": 0,
+                      "isSuccess": true,
+                      "model": "AS-201",
+                      "rebootRequired": false
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "RemoteControl"
+        ],
+        "description": "取得 API token",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/userParameter"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "allOf": [
+                    {
+                      "$ref": "#/components/schemas/GeneralResponse"
+                    },
+                    {
+                      "type": "object",
+                      "properties": {
+                        "data": {
+                          "$ref": "#/components/schemas/ApiKeyInfo"
+                        }
+                      }
+                    }
+                  ]
+                },
+                "examples": {
+                  "Success": {
+                    "summary": "Success",
+                    "value": {
+                      "data": {
+                        "expiredTime": "-1",
+                        "scope": "full",
+                        "token": "nGv9A3NhVjlU6xZQ"
+                      },
+                      "errorCode": 0,
+                      "isSuccess": true,
+                      "model": "AS-201",
+                      "rebootRequired": false
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/station/conference/appvc": {
+      "get": {
+        "tags": [
+          "Conference"
+        ],
+        "description": "取得 AppVC 啟用狀態",
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "allOf": [
+                    {
+                      "$ref": "#/components/schemas/GeneralResponse"
+                    },
+                    {
+                      "type": "object",
+                      "properties": {
+                        "data": {
+                          "type": "object",
+                          "properties": {
+                            "expiredDate": {
+                              "type": "string",
+                              "description": "永久 key 都會是 2099 開頭",
+                              "example": "2024-04-26"
+                            },
+                            "key": {
+                              "type": "string",
+                              "description": "預設空字串，若永久 key 啟用成功就會出現值",
+                              "example": "l3BzuIRHpjHUoeCr50dPrs37l07khmfcDSMWdYINQoBBXhsghqIggP17vujNZG8stQA="
+                            },
+                            "status": {
+                              "type": "integer",
+                              "description": "0(未啟用), 1(啟用), 2(過期)",
+                              "example": 1
+                            }
+                          }
+                        }
+                      }
+                    }
+                  ]
+                },
+                "examples": {
+                  "NotEnabled": {
+                    "summary": "未啟用",
+                    "value": {
+                      "data": {
+                        "expiredDate": "",
+                        "key": "",
+                        "status": 0
+                      },
+                      "errorCode": 0,
+                      "isSuccess": true,
+                      "model": "AS-201",
+                      "rebootRequired": false
+                    }
+                  },
+                  "Enabled": {
+                    "summary": "試用版啟用中",
+                    "value": {
+                      "data": {
+                        "expiredDate": "2029-04-26",
+                        "key": "",
+                        "status": 1
+                      },
+                      "errorCode": 0,
+                      "isSuccess": true,
+                      "model": "AS-201",
+                      "rebootRequired": false
+                    }
+                  },
+                  "OfficialEnabled": {
+                    "summary": "正式版啟用中",
+                    "value": {
+                      "data": {
+                        "expiredDate": "2099-12-30",
+                        "key": "l3BzuIRHpjHUoeCr50dPrs37l07khmfcDSMWdYINQoBBXhsghqIggP17vujNZG8stQA=",
+                        "status": 1
+                      },
+                      "errorCode": 0,
+                      "isSuccess": true,
+                      "model": "AS-201",
+                      "rebootRequired": false
+                    }
+                  },
+                  "Expired": {
+                    "summary": "過期(只有試用版會過期)",
+                    "value": {
+                      "data": {
+                        "expiredDate": "2024-04-10",
+                        "key": "",
+                        "status": 2
+                      },
+                      "errorCode": 0,
+                      "isSuccess": true,
+                      "model": "AS-201",
+                      "rebootRequired": false
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "Conference"
+        ],
+        "description": "啟用 AppVC Key",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/userParameter"
+          }
+        ],
+        "security": [
+          {
+            "ApiKeyAuth": []
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "key": {
+                    "type": "string",
+                    "description": "輸入取得的 key 值 (會是一個 <= 70 字元的字串，且僅允許英文字母大小寫、數字、=/+而已)",
+                    "example": "l3BzuIRHpjHUuOmwlgN5ylzKSWrr5xRAZhM2rL0PjUwsCK2CpCrJu3UK/HqNv6KIDLE="
+                  },
+                  "type": {
+                    "type": "string",
+                    "description": "目前固定用 appvc",
+                    "example": "appvc"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GeneralResponse"
+                },
+                "examples": {
+                  "Success": {
+                    "summary": "啟用成功",
+                    "value": {
+                      "data": "",
+                      "errorCode": 0,
+                      "isSuccess": true,
+                      "model": "AS-201",
+                      "rebootRequired": true
+                    }
+                  },
+                  "KeyNotFound": {
+                    "summary": "DB找不到Key",
+                    "value": {
+                      "data": "",
+                      "errorCoe": 1000,
+                      "errorMsg": "Fail: key is not found",
+                      "isSuccess": false,
+                      "model": "AS-201",
+                      "rebootRequired": false
+                    }
+                  },
+                  "NotConsistent": {
+                    "summary": "vendor或model與資料不匹配",
+                    "value": {
+                      "data": "",
+                      "errorCoe": 1000,
+                      "errorMsg": "Fail: vendor or model is not consistent",
+                      "isSuccess": false,
+                      "model": "AS-201",
+                      "rebootRequired": false
+                    }
+                  },
+                  "AlreadyRegistered": {
+                    "summary": "已啟用",
+                    "value": {
+                      "data": "",
+                      "errorCoe": 1000,
+                      "errorMsg": "Fail: Already registered",
+                      "isSuccess": false,
+                      "model": "AS-201",
+                      "rebootRequired": false
+                    }
+                  },
+                  "AlreadyOfficialVersion": {
+                    "summary": "已經是永久版",
+                    "value": {
+                      "data": "",
+                      "errorCoe": 1000,
+                      "errorMsg": "Fail: Already the official version",
+                      "isSuccess": false,
+                      "model": "AS-201",
+                      "rebootRequired": false
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "UserInfo": {
+        "type": "object",
+        "required": [
+          "account",
+          "password"
+        ],
+        "properties": {
+          "account": {
+            "type": "string",
+            "example": "admin",
+            "description": "預設為 admin"
+          },
+          "password": {
+            "type": "string",
+            "example": "admin",
+            "description": "預設為 admin，使用者可自行變更"
+          }
+        }
+      },
+      "ModerationInfo": {
+        "type": "object",
+        "required": [
+          "account",
+          "password"
+        ],
+        "properties": {
+          "account": {
+            "type": "string",
+            "example": "moderator",
+            "description": "預設為 moderator"
+          },
+          "password": {
+            "type": "string",
+            "example": "moderator",
+            "description": "預設為 moderator，使用者可自行變更"
+          }
+        }
+      },
+      "FileDescription": {
+        "type": "object",
+        "properties": {
+          "file": {
+            "type": "string",
+            "format": "binary"
+          }
+        }
+      },
+      "GeneralInfo": {
+        "type": "object",
+        "properties": {
+          "devName": {
+            "type": "string",
+            "example": "AS201-0024",
+            "description": "變動後會將所有網路斷線，須重啟"
+          },
+          "codeType": {
+            "type": "integer",
+            "example": 1,
+            "description": "0(random), 1(no code), 2(fixed)",
+            "enum": [
+              0,
+              1,
+              2
+            ]
+          },
+          "codeValue": {
+            "type": "string",
+            "example": "",
+            "description": "If codeType is fixed, need code."
+          },
+          "curWallpaper": {
+            "type": "integer",
+            "example": 0,
+            "enum": [
+              0,
+              1,
+              2,
+              3,
+              4,
+              5
+            ]
+          },
+          "allowRemoteView": {
+            "type": "boolean",
+            "example": false
+          },
+          "curLanguage": {
+            "type": "integer",
+            "example": 0,
+            "description": "(0)English, (1)正體中文, (2)简体中文, (3)にほんご (日本語)",
+            "enum": [
+              0,
+              1,
+              2,
+              3
+            ]
+          }
+        }
+      },
+      "ResolutionInfo": {
+        "type": "object",
+        "properties": {
+          "enableVGA": {
+            "type": "boolean",
+            "example": false,
+            "description": "是否切換 VGA 模式"
+          },
+          "resolution": {
+            "type": "string",
+            "example": "Auto",
+            "description": "Auto, 3840x2160, 1920x1080, 1280x720, 1024x768, 1920x1200"
+          },
+          "isAudioFromHDMI": {
+            "type": "boolean",
+            "example": false,
+            "description": "指定聲音從 HDMI 輸出"
+          }
+        }
+      },
+      "TimeInfo": {
+        "type": "object",
+        "properties": {
+          "isAutoTime": {
+            "type": "boolean",
+            "example": true,
+            "description": "自動設定時間"
+          },
+          "showTime24": {
+            "type": "boolean",
+            "example": false,
+            "description": "顯示 24 小時制"
+          },
+          "ntpServer": {
+            "type": "string",
+            "example": "ntp.nict.jp",
+            "description": "網路時間協定"
+          },
+          "timeZone": {
+            "type": "string",
+            "example": "Asia/Taipei"
+          },
+          "timeout": {
+            "type": "integer",
+            "example": 5000
+          },
+          "curTimeMillis": {
+            "type": "string",
+            "example": "2023-04-12 17:28:37"
+          },
+          "isDailyReboot": {
+            "type": "boolean",
+            "example": true
+          },
+          "dailyRebootTime": {
+            "type": "string",
+            "example": "02:00"
+          }
+        }
+      },
+      "WifiSettingInfo": {
+        "type": "object",
+        "properties": {
+          "mode": {
+            "type": "integer",
+            "example": 1,
+            "description": "0(OFF), 1(AP), 2(STA)",
+            "enum": [
+              0,
+              1,
+              2
+            ]
+          },
+          "hideSSID": {
+            "type": "boolean",
+            "example": false,
+            "description": "Hide ssid from Wi-Fi list."
+          },
+          "security": {
+            "type": "integer",
+            "example": 0,
+            "description": "wireless authentication method: 0(non), 1(WPA2-PSK)",
+            "enum": [
+              0,
+              1
+            ]
+          },
+          "password": {
+            "type": "string",
+            "example": "123456789",
+            "pattern": "^[A-Za-z0-9]{8,16}$",
+            "description": "The authorized password of WPA2."
+          },
+          "band": {
+            "type": "integer",
+            "format": "int32",
+            "example": 1,
+            "description": "802.11 frequency band: 0(2.4GHz), 1(5GHz)",
+            "enum": [
+              0,
+              1
+            ]
+          },
+          "networkMode": {
+            "type": "integer",
+            "format": "int32",
+            "example": 0,
+            "description": "The networking mode: 0(NAT), 1(Bridge)",
+            "enum": [
+              0,
+              1
+            ]
+          },
+          "gatekeeper": {
+            "type": "integer",
+            "format": "int32",
+            "example": 0,
+            "description": "The rule of gatekeeper: 0(Allow All), 1(Internet Only), 2(Block All)",
+            "enum": [
+              0,
+              1,
+              2
+            ]
+          }
+        }
+      },
+      "WifiList": {
+        "type": "array",
+        "items": {
+          "$ref": "#/components/schemas/WifiListInfo"
+        }
+      },
+      "WifiListInfo": {
+        "type": "object",
+        "properties": {
+          "level": {
+            "type": "integer",
+            "format": "int32",
+            "example": 4,
+            "description": "signal strength.",
+            "enum": [
+              0,
+              1,
+              2,
+              3,
+              4
+            ]
+          },
+          "security": {
+            "type": "string",
+            "example": "WPA2 PSK",
+            "description": "wireless authentication method."
+          },
+          "ssid": {
+            "type": "string",
+            "example": "Astrogate_5G",
+            "pattern": "^[A-Za-z\\d\\-]{1,16}$"
+          },
+          "status": {
+            "type": "string",
+            "example": "connected",
+            "enum": [
+              "saved",
+              "connected"
+            ]
+          }
+        }
+      },
+      "WifiConnectionInfo": {
+        "allOf": [
+          {
+            "type": "object",
+            "properties": {
+              "ssid": {
+                "type": "string",
+                "example": "Astrogate_5G",
+                "pattern": "^[A-Za-z\\d\\-]{1,16}$"
+              },
+              "security": {
+                "type": "string",
+                "example": "wpa2",
+                "description": "各種 wifi 類型"
+              },
+              "password": {
+                "type": "string",
+                "example": "83566024",
+                "description": "選擇 security 時必填"
+              },
+              "eapMethod": {
+                "type": "string",
+                "example": "",
+                "description": "security 選擇 EAP 時填寫"
+              },
+              "phase": {
+                "type": "string",
+                "example": "",
+                "description": "security 選擇 EAP 時填寫"
+              },
+              "identity": {
+                "type": "string",
+                "example": "",
+                "description": "security 選擇 EAP 時填寫"
+              },
+              "isStaticIp": {
+                "type": "boolean",
+                "example": true,
+                "description": "true 才需要填寫 static ip 的相關資訊"
+              },
+              "reconnect": {
+                "type": "boolean",
+                "example": true
+              }
+            }
+          },
+          {
+            "$ref": "#/components/schemas/StaticIPConfiguration"
+          }
+        ]
+      },
+      "EthernetInfo": {
+        "allOf": [
+          {
+            "type": "object",
+            "properties": {
+              "enableDHCP": {
+                "type": "boolean",
+                "example": false,
+                "description": "DHCP or Static ip"
+              }
+            }
+          },
+          {
+            "$ref": "#/components/schemas/StaticIPConfiguration"
+          }
+        ]
+      },
+      "StaticIPConfiguration": {
+        "type": "object",
+        "properties": {
+          "ip": {
+            "type": "string",
+            "format": "ipv4",
+            "example": "192.168.125.153"
+          },
+          "mask": {
+            "type": "string",
+            "format": "ipv4",
+            "example": "255.255.255.0"
+          },
+          "gateway": {
+            "type": "string",
+            "format": "ipv4",
+            "example": "192.168.125.1"
+          },
+          "dns1": {
+            "type": "string",
+            "format": "ipv4",
+            "example": "168.95.1.1"
+          },
+          "dns2": {
+            "type": "string",
+            "format": "ipv4",
+            "example": "8.8.8.8"
+          }
+        }
+      },
+      "PodInfo": {
+        "type": "object",
+        "properties": {
+          "mode": {
+            "type": "integer",
+            "example": 0,
+            "description": "0-this station、1-other"
+          },
+          "ip": {
+            "type": "string",
+            "format": "ipv4",
+            "example": "192.168.125.176"
+          },
+          "ssid": {
+            "type": "string",
+            "example": "Astrogate_Unknown"
+          },
+          "security": {
+            "type": "integer",
+            "example": 0,
+            "description": "0-none、1-WPA2"
+          },
+          "password": {
+            "type": "string",
+            "example": "qwer!!test",
+            "description": "無限制，因為 User 的 ssid 密碼有各種特殊符號"
+          }
+        }
+      },
+      "ServiceInfo": {
+        "type": "object",
+        "properties": {
+          "allowMiracast": {
+            "type": "boolean",
+            "example": false
+          },
+          "allowGoogleCast": {
+            "type": "boolean",
+            "example": true
+          },
+          "allowAirPlay": {
+            "type": "boolean",
+            "example": true
+          }
+        }
+      },
+      "PasswordInfo": {
+        "type": "object",
+        "required": [
+          "old",
+          "new"
+        ],
+        "properties": {
+          "old": {
+            "type": "string",
+            "example": "admin",
+            "pattern": "^[A-Za-z0-9]{1,16}$"
+          },
+          "new": {
+            "type": "string",
+            "example": "admin233",
+            "pattern": "^[A-Za-z0-9]{1,16}$"
+          }
+        }
+      },
+      "PowerInfo": {
+        "type": "object",
+        "properties": {
+          "mode": {
+            "type": "integer",
+            "example": 0,
+            "description": "0(sleep mode), 1(suspend mode)",
+            "enum": [
+              1,
+              2
+            ]
+          },
+          "time": {
+            "type": "integer",
+            "example": -1,
+            "description": "-1 indicates never & the unit is minutes",
+            "enum": [
+              -1,
+              5,
+              15,
+              30,
+              60
+            ]
+          }
+        }
+      },
+      "ApiKeyInfo": {
+        "type": "object",
+        "properties": {
+          "token": {
+            "type": "string",
+            "pattern": "^[A-Za-z0-9]{16}$",
+            "example": "zxcvfdsa1234rewq"
+          },
+          "expiredTime": {
+            "description": "-1 indicates never.",
+            "type": "string",
+            "example": -1
+          },
+          "scope": {
+            "type": "string",
+            "example": "full"
+          }
+        }
+      },
+      "ErrorCode": {
+        "type": "object",
+        "properties": {
+          "errorCode": {
+            "type": "integer",
+            "format": "int32",
+            "enum": [
+              0,
+              1000,
+              1001,
+              1002,
+              1003,
+              1004,
+              1005,
+              1100,
+              1200
+            ],
+            "x-enum-descriptions": [
+              "0,Success",
+              "1000,Fail",
+              "1001,User or APP Key is unavailable",
+              "1002,API internal exception",
+              "1003,Lack parameter",
+              "1004,Basic Auth or APP Key is unavailable",
+              "1005,User or password is unavailable",
+              "1100,The input value is unavailable",
+              "1200,The input file is unavailable"
+            ],
+            "example": 0
+          }
+        }
+      },
+      "GeneralResponse": {
+        "type": "object",
+        "required": [
+          "data",
+          "errorCode",
+          "isSuccess",
+          "model",
+          "rebootRequired"
+        ],
+        "allOf": [
+          {
+            "type": "object",
+            "properties": {
+              "data": {
+                "type": "boolean",
+                "example": true
+              }
+            }
+          },
+          {
+            "$ref": "#/components/schemas/ErrorCode"
+          },
+          {
+            "type": "object",
+            "properties": {
+              "errorMsg": {
+                "type": "string",
+                "example": ""
+              },
+              "isSuccess": {
+                "type": "boolean",
+                "example": true
+              },
+              "model": {
+                "type": "string",
+                "example": "AS-201"
+              },
+              "rebootRequired": {
+                "type": "boolean",
+                "example": false,
+                "description": "The device needs to reboot to apply this new change."
+              }
+            }
+          }
+        ]
+      },
+      "LoginResponse": {
+        "type": "object",
+        "required": [
+          "data",
+          "errorCode",
+          "isSuccess",
+          "model",
+          "rebootRequired"
+        ],
+        "allOf": [
+          {
+            "type": "object",
+            "properties": {
+              "data": {
+                "type": "object",
+                "properties": {
+                  "token": {
+                    "type": "string",
+                    "example": "6LcUyH4I4EKpAqIo"
+                  }
+                }
+              }
+            }
+          },
+          {
+            "$ref": "#/components/schemas/ErrorCode"
+          },
+          {
+            "type": "object",
+            "properties": {
+              "errorMsg": {
+                "type": "string",
+                "example": ""
+              },
+              "isSuccess": {
+                "type": "boolean",
+                "example": true
+              },
+              "model": {
+                "type": "string",
+                "example": "AS-201"
+              },
+              "rebootRequired": {
+                "type": "boolean",
+                "example": false,
+                "description": "The device needs to reboot to apply this new change."
+              }
+            }
+          }
+        ]
+      }
+    },
+    "examples": {
+      "success_login": {
+        "summary": "Success",
+        "value": {
+          "data": {
+            "token": "6LcUyH4I4EKpAqIo"
+          },
+          "errorCode": 0,
+          "isSuccess": true,
+          "model": "AS-201",
+          "rebootRequired": false
+        }
+      },
+      "success_0": {
+        "summary": "Success",
+        "value": {
+          "data": true,
+          "errorCode": 0,
+          "isSuccess": true,
+          "model": "AS-201",
+          "rebootRequired": false
+        }
+      },
+      "failed_1000": {
+        "summary": "Failed",
+        "value": {
+          "data": "",
+          "errorCode": 1000,
+          "errorMsg": "Failed.",
+          "isSuccess": false,
+          "model": "AS-201",
+          "rebootRequired": false
+        }
+      },
+      "failed_1001": {
+        "summary": "User or APP Key is unavailable",
+        "value": {
+          "data": "",
+          "errorCode": 1001,
+          "errorMsg": "User or APP Key is unavailable.",
+          "isSuccess": false,
+          "model": "AS-201",
+          "rebootRequired": false
+        }
+      },
+      "failed_1002": {
+        "summary": "API internal exception",
+        "value": {
+          "data": "",
+          "errorCode": 1002,
+          "errorMsg": "API internal exception.",
+          "isSuccess": false,
+          "model": "AS-201",
+          "rebootRequired": false
+        }
+      },
+      "failed_1003": {
+        "summary": "Lack parameter",
+        "value": {
+          "data": "",
+          "errorCode": 1003,
+          "errorMsg": "Lack parameter.",
+          "isSuccess": false,
+          "model": "AS-201",
+          "rebootRequired": false
+        }
+      },
+      "failed_1004": {
+        "summary": "Basic Auth or APP Key is unavailable",
+        "value": {
+          "data": "",
+          "errorCode": 1004,
+          "errorMsg": "Basic Auth or APP Key is unavailable.",
+          "isSuccess": false,
+          "model": "AS-201",
+          "rebootRequired": false
+        }
+      },
+      "failed_1005": {
+        "summary": "User or password is unavailable",
+        "value": {
+          "data": "",
+          "errorCode": 1005,
+          "errorMsg": "User or password is unavailable.",
+          "isSuccess": false,
+          "model": "AS-201",
+          "rebootRequired": false
+        }
+      },
+      "failed_1100": {
+        "summary": "The input value is unavailable",
+        "value": {
+          "data": "",
+          "errorCode": 1100,
+          "errorMsg": "The input value is unavailable.",
+          "isSuccess": false,
+          "model": "AS-201",
+          "rebootRequired": false
+        }
+      },
+      "failed_1200": {
+        "summary": "The input file format is unavailable",
+        "value": {
+          "data": "",
+          "errorCoe": 1200,
+          "errorMsg": "The input file format is unavailable.",
+          "isSuccess": false,
+          "model": "AS-201",
+          "rebootRequired": false
+        }
+      }
+    },
+    "parameters": {
+      "userParameter": {
+        "name": "username",
+        "example": "admin",
+        "in": "query",
+        "required": true,
+        "schema": {
+          "type": "string"
+        }
+      },
+      "idParameter": {
+        "name": "id",
+        "in": "path",
+        "required": true,
+        "description": "Default wallpaper 0 and 1 cannot be replaced or delete",
+        "schema": {
+          "type": "integer",
+          "format": "int32",
+          "minimum": 2,
+          "maximum": 5,
+          "enum": [
+            2,
+            3,
+            4,
+            5
+          ]
+        }
+      }
+    },
+    "securitySchemes": {
+      "ApiKeyAuth": {
+        "type": "apiKey",
+        "description": "The API Key for issuing a RESTful API request.",
+        "in": "header",
+        "name": "X-API-KEY"
+      }
+    }
+  },
+  "security": [
+    {
+      "ApiKeyAuth": []
+    }
+  ]
+}
