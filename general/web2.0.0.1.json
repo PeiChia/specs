@@ -1,7 +1,7 @@
 {
   "openapi": "3.0.3",
   "info": {
-    "version": "2.0.0",
+    "version": "2.0.1",
     "title": "Astrogate ASTROS Station RESTful API",
     "description": "The API for ASTROS Station"
   },
