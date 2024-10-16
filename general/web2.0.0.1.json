@@ -91,7 +91,7 @@
     }
   ],
   "paths": {
-    "/station/quickJoin": {
+    "/api/v2/station/quickJoin": {
       "get": {
         "tags": [
           "BeforeLogin"
@@ -136,7 +136,7 @@
         }
       }
     },
-    "/station/general/logincode": {
+    "/api/v2/station/general/logincode": {
       "get": {
         "tags": [
           "BeforeLogin"
@@ -217,7 +217,7 @@
         }
       }
     },
-    "/station/model": {
+    "/api/v2/station/model": {
       "get": {
         "tags": [
           "BeforeLogin"
@@ -287,7 +287,7 @@
         }
       }
     },
-    "/station/login": {
+    "/api/v2/station/login": {
       "post": {
         "tags": [
           "Login"
@@ -327,48 +327,7 @@
         }
       }
     },
-    "/moderation/login": {
-      "post": {
-        "tags": [
-          "Login"
-        ],
-        "summary": "Not yet implemented, moderation-related APIs do not need to be handled at this time",
-        "description": "Enter the password to log in to the moderation operation page",
-        "requestBody": {
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/ModerationInfo"
-              }
-            }
-          }
-        },
-        "responses": {
-          "200": {
-            "description": "Response successful, determine business logic",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/LoginResponse"
-                },
-                "examples": {
-                  "success_0": {
-                    "$ref": "#/components/examples/success_login"
-                  },
-                  "failed_1003": {
-                    "$ref": "#/components/examples/failed_1003"
-                  },
-                  "failed_1005": {
-                    "$ref": "#/components/examples/failed_1005"
-                  }
-                }
-              }
-            }
-          }
-        }
-      }
-    },
-    "/station/reboot": {
+    "/api/v2/station/reboot": {
       "post": {
         "tags": [
           "Global"
@@ -421,7 +380,7 @@
         }
       }
     },
-    "/station/upload": {
+    "/api/v2/station/upload": {
       "post": {
         "tags": [
           "Upload"
@@ -508,7 +467,7 @@
         }
       }
     },
-    "/station/general": {
+    "/api/v2/station/general": {
       "get": {
         "tags": [
           "General"
@@ -614,7 +573,7 @@
         }
       }
     },
-    "/station/general/wallpaper/list": {
+    "/api/v2/station/general/wallpaper/list": {
       "get": {
         "tags": [
           "General"
@@ -675,7 +634,7 @@
         }
       }
     },
-    "/station/general/wallpaper/{id}": {
+    "/api/v2/station/general/wallpaper/{id}": {
       "delete": {
         "tags": [
           "General"
@@ -724,7 +683,7 @@
         }
       }
     },
-    "/station/resolution": {
+    "/api/v2/station/resolution": {
       "get": {
         "tags": [
           "HDMI & VGA"
@@ -906,7 +865,7 @@
         }
       }
     },
-    "/station/resolution/list": {
+    "/api/v2/station/resolution/list": {
       "get": {
         "tags": [
           "HDMI & VGA"
@@ -969,7 +928,7 @@
         }
       }
     },
-    "/station/time": {
+    "/api/v2/station/time": {
       "get": {
         "tags": [
           "DateTime"
@@ -1100,7 +1059,7 @@
         }
       }
     },
-    "/station/wifi": {
+    "/api/v2/station/wifi": {
       "get": {
         "tags": [
           "Wi-Fi"
@@ -1286,7 +1245,7 @@
         }
       }
     },
-    "/station/wifi/list": {
+    "/api/v2/station/wifi/list": {
       "get": {
         "tags": [
           "Wi-Fi"
@@ -1381,7 +1340,7 @@
         }
       }
     },
-    "/station/wifi/connection": {
+    "/api/v2/station/wifi/connection": {
       "get": {
         "tags": [
           "Wi-Fi"
@@ -1658,7 +1617,7 @@
         }
       }
     },
-    "/station/ethernet": {
+    "/api/v2/station/ethernet": {
       "get": {
         "tags": [
           "Ethernet"
@@ -1807,7 +1766,7 @@
         }
       }
     },
-    "/station/firmware": {
+    "/api/v2/station/firmware": {
       "get": {
         "tags": [
           "Update"
@@ -1972,7 +1931,7 @@
         }
       }
     },
-    "/station/firmware/download/start": {
+    "/api/v2/station/firmware/download/start": {
       "put": {
         "tags": [
           "Update"
@@ -2073,7 +2032,7 @@
         }
       }
     },
-    "/station/firmware/download/stop": {
+    "/api/v2/station/firmware/download/stop": {
       "put": {
         "tags": [
           "Update"
@@ -2119,7 +2078,7 @@
         }
       }
     },
-    "/station/ota/check": {
+    "/api/v2/station/ota/check": {
       "get": {
         "tags": [
           "Update"
@@ -2164,7 +2123,7 @@
         }
       }
     },
-    "/station/admin/password": {
+    "/api/v2/station/admin/password": {
       "put": {
         "tags": [
           "Password"
@@ -2280,7 +2239,7 @@
         }
       }
     },
-    "/station/moderation/password": {
+    "/api/v2/station/moderation/password": {
       "put": {
         "tags": [
           "Password"
@@ -2396,7 +2355,7 @@
         }
       }
     },
-    "/station/pod/pairing": {
+    "/api/v2/station/pod/pairing": {
       "get": {
         "tags": [
           "Pod"
@@ -2540,7 +2499,7 @@
         }
       }
     },
-    "/station/service": {
+    "/api/v2/station/service": {
       "get": {
         "tags": [
           "MirroringService"
@@ -2650,7 +2609,7 @@
         }
       }
     },
-    "/station/system/reset": {
+    "/api/v2/station/system/reset": {
       "post": {
         "tags": [
           "System"
@@ -2692,7 +2651,7 @@
         }
       }
     },
-    "/station/system/log/switch": {
+    "/api/v2/station/system/log/switch": {
       "get": {
         "tags": [
           "System"
@@ -2806,7 +2765,7 @@
         }
       }
     },
-    "/station/system/log": {
+    "/api/v2/station/system/log": {
       "get": {
         "tags": [
           "System"
@@ -2938,7 +2897,7 @@
         }
       }
     },
-    "/station/system/config": {
+    "/api/v2/station/system/config": {
       "get": {
         "tags": [
           "System"
@@ -3035,7 +2994,7 @@
         }
       }
     },
-    "/station/power/setting": {
+    "/api/v2/station/power/setting": {
       "get": {
         "tags": [
           "Power"
@@ -3161,7 +3120,7 @@
         }
       }
     },
-    "/station/remote/amsName": {
+    "/api/v2/station/remote/amsName": {
       "get": {
         "tags": [
           "RemoteControl"
@@ -3262,7 +3221,7 @@
         }
       }
     },
-    "/station/remote/apikey": {
+    "/api/v2/station/remote/apikey": {
       "get": {
         "tags": [
           "RemoteControl"
@@ -3365,7 +3324,7 @@
         }
       }
     },
-    "/station/conference/appvc": {
+    "/api/v2/station/conference/appvc": {
       "get": {
         "tags": [
           "Conference"
