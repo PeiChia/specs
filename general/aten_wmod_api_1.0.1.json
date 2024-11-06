@@ -1,0 +1,1572 @@
+{
+  "openapi": "3.0.3",
+  "info": {
+    "version": "1.0.1",
+    "title": "ATEN Wireless Presentation API",
+    "description": "The API for ATEN Wireless Presentation",
+    "contact": {
+      "name": "System Developer",
+      "url": "https://www.astrogate.com"
+    },
+    "license": {
+      "name": "Apache 2.0",
+      "url": "https://www.apache.org/licenses/LICENSE-2.0.html"
+    }
+  },
+  "servers": [
+    {
+      "description": "ATEN Wireless Presentation",
+      "url": "{protocol}://{environment}",
+      "variables": {
+        "protocol": {
+          "description": "The Data Set API is accessible via https and http",
+          "enum": [
+            "https",
+            "http"
+          ],
+          "default": "https"
+        },
+        "environment": {
+          "description": "Enter the environment manually",
+          "default": "VP2021-0024"
+        },
+        "port": {
+          "default": "443",
+          "enum": [
+            "443",
+            "8443"
+          ]
+        }
+      }
+    }
+  ],
+  "tags": [
+    {
+      "name": "User"
+    },
+    {
+      "name": "Moderator",
+      "description": "Headers need X-API-KEY"
+    }
+  ],
+  "paths": {
+    "/astro/login/moderation": {
+      "get": {
+        "tags": [
+          "User"
+        ],
+        "description": "After a successful login, it will have the same effect as the 'moderation mode' displayed on the OSD, where the text changes from 'connected' to 'Moderation on' when connected through the client.",
+        "parameters": [
+          {
+            "in": "query",
+            "name": "account",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "example": "moderator",
+            "description": "Consistently use 'moderator'"
+          },
+          {
+            "in": "query",
+            "name": "password",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "example": "moderator",
+            "description": "default is 'moderator'"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "allOf": [
+                    {
+                      "$ref": "#/components/schemas/GeneralResponse"
+                    }
+                  ]
+                },
+                "examples": {
+                  "Success": {
+                    "summary": "Success",
+                    "value": {
+                      "data": true,
+                      "errorCode": 0,
+                      "isSuccess": true,
+                      "model": "VP2021",
+                      "rebootRequired": false
+                    }
+                  },
+                  "Fail": {
+                    "summary": "Fail: password not correct",
+                    "value": {
+                      "data": false,
+                      "errorCode": 0,
+                      "isSuccess": true,
+                      "model": "VP2021",
+                      "rebootRequired": false
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/astro/logout/moderation": {
+      "get": {
+        "tags": [
+          "User"
+        ],
+        "description": "Exit moderator mode.",
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "allOf": [
+                    {
+                      "$ref": "#/components/schemas/GeneralResponse"
+                    }
+                  ]
+                },
+                "examples": {
+                  "Success": {
+                    "summary": "Success",
+                    "value": {
+                      "data": true,
+                      "errorCode": 0,
+                      "isSuccess": true,
+                      "model": "VP2021",
+                      "rebootRequired": false
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/device/admin/apikey": {
+      "put": {
+        "tags": [
+          "User"
+        ],
+        "description": "Obtain the moderator's token; all subsequent moderator APIs require the token",
+        "summary": "Headers need Authorization",
+        "security": [
+          {
+            "BasicAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/userParameter"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "allOf": [
+                    {
+                      "$ref": "#/components/schemas/GeneralResponse"
+                    },
+                    {
+                      "type": "object",
+                      "properties": {
+                        "data": {
+                          "type": "string",
+                          "example": "{\"token\":\"A0UlqvhOjC31ybDN\",\"expiredTime\":\"-1\",\"scope\":\"full\"}",
+                          "description": "Just use the token; other parameters are not needed"
+                        }
+                      }
+                    }
+                  ]
+                },
+                "examples": {
+                  "Success": {
+                    "summary": "Success",
+                    "value": {
+                      "data": "{\"token\":\"A0UlqvhOjC31ybDN\",\"expiredTime\":\"-1\",\"scope\":\"full\"}",
+                      "errorCode": 0,
+                      "isSuccess": true,
+                      "model": "VP2021",
+                      "rebootRequired": false
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/moderator/client/showToastStationInfo": {
+      "get": {
+        "tags": [
+          "Moderator"
+        ],
+        "description": "Display a toast with the name and IP on the OSD during projection",
+        "security": [
+          {
+            "ApiKeyAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/userParameter"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "allOf": [
+                    {
+                      "$ref": "#/components/schemas/GeneralResponse"
+                    }
+                  ]
+                },
+                "examples": {
+                  "Success": {
+                    "summary": "Success",
+                    "value": {
+                      "data": true,
+                      "errorCode": 0,
+                      "isSuccess": true,
+                      "model": "VP2021",
+                      "rebootRequired": false
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/moderator/client/informations": {
+      "get": {
+        "tags": [
+          "Moderator"
+        ],
+        "description": "Retrieve the data of each connected client of the station",
+        "security": [
+          {
+            "ApiKeyAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/userParameter"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "allOf": [
+                    {
+                      "$ref": "#/components/schemas/GeneralResponse"
+                    },
+                    {
+                      "type": "object",
+                      "properties": {
+                        "data": {
+                          "$ref": "#/components/schemas/StreamsResponse"
+                        }
+                      }
+                    }
+                  ]
+                },
+                "examples": {
+                  "Success_1": {
+                    "summary": "Success (No connection)",
+                    "value": {
+                      "data": "{\"streams\":[],\"rv\":{\"st\":1,\"ct\":1}}",
+                      "errorCode": 0,
+                      "isSuccess": true,
+                      "model": "VP2021",
+                      "rebootRequired": false
+                    }
+                  },
+                  "Success_2": {
+                    "summary": "Success (One connection)",
+                    "value": {
+                      "data": "{\"streams\":[{\"cid\":2,\"sid\":1,\"name\":\"QaTest\",\"st\":3,\"as\":2,\"at\":2,\"ot\":1,\"av\":\"2.1.0.165\",\"ts\":1730857271938,\"ps\":2}],\"rv\":{\"st\":1,\"ct\":0}}",
+                      "errorCode": 0,
+                      "isSuccess": true,
+                      "model": "VP2021",
+                      "rebootRequired": false
+                    }
+                  },
+                  "failed_1001": {
+                    "$ref": "#/components/examples/failed_1001"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/moderator/client/thumbnails": {
+      "get": {
+        "tags": [
+          "Moderator"
+        ],
+        "description": "Retrieve the screenshot thumbnail of the client. Currently, only the Windows client has a thumbnail",
+        "security": [
+          {
+            "ApiKeyAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/userParameter"
+          },
+          {
+            "name": "projecting",
+            "in": "query",
+            "required": true,
+            "description": "true: Display only the projection screen, false: Display projection & standby screens",
+            "schema": {
+              "type": "boolean",
+              "enum": [
+                true,
+                false
+              ]
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "allOf": [
+                    {
+                      "$ref": "#/components/schemas/GeneralResponse"
+                    },
+                    {
+                      "type": "object",
+                      "properties": {
+                        "data": {
+                          "$ref": "#/components/schemas/ThumbnailsResponse"
+                        }
+                      }
+                    }
+                  ]
+                },
+                "examples": {
+                  "Success_1": {
+                    "summary": "Success (No connection)",
+                    "value": {
+                      "data": "{\"streams\":[]}",
+                      "errorCode": 0,
+                      "isSuccess": true,
+                      "model": "VP2021",
+                      "rebootRequired": false
+                    }
+                  },
+                  "Success_2": {
+                    "summary": "Success (One connection)",
+                    "value": {
+                      "data": "{\"streams\":[{\"cid\":4,\"sid\":3,\"tb\":\"/userfile/ModeratorBackendImage/thumbnail_0.jpg\"}]}",
+                      "errorCode": 0,
+                      "isSuccess": true,
+                      "model": "VP2021",
+                      "rebootRequired": false
+                    }
+                  },
+                  "failed_1001": {
+                    "$ref": "#/components/examples/failed_1001"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/moderator/client/startStream": {
+      "post": {
+        "tags": [
+          "Moderator"
+        ],
+        "description": "Start projecting the client",
+        "security": [
+          {
+            "ApiKeyAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/userParameter"
+          },
+          {
+            "name": "clientId",
+            "in": "query",
+            "required": true,
+            "description": "Any connected client, with both cid and sid, must be completely correct to trigger the operation",
+            "schema": {
+              "type": "integer",
+              "example": 1
+            }
+          },
+          {
+            "name": "streamId",
+            "in": "query",
+            "required": true,
+            "description": "Any connected client, with both cid and sid, must be completely correct to trigger the operation",
+            "schema": {
+              "type": "integer",
+              "example": 1
+            }
+          },
+          {
+            "name": "position",
+            "in": "query",
+            "required": true,
+            "description": "1 (Auto), 2 (Full Screen)",
+            "schema": {
+              "type": "integer",
+              "enum": [
+                1,
+                2
+              ],
+              "example": 1
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "allOf": [
+                    {
+                      "$ref": "#/components/schemas/GeneralResponse"
+                    },
+                    {
+                      "type": "object",
+                      "properties": {
+                        "data": {
+                          "type": "string",
+                          "example": "0",
+                          "description": "only return '0'"
+                        }
+                      }
+                    }
+                  ]
+                },
+                "examples": {
+                  "Success": {
+                    "summary": "Success",
+                    "value": {
+                      "data": "0",
+                      "errorCode": 0,
+                      "isSuccess": true,
+                      "model": "VP2021",
+                      "rebootRequired": false
+                    }
+                  },
+                  "failed_1001": {
+                    "$ref": "#/components/examples/failed_1001"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/moderator/client/resumeStream": {
+      "put": {
+        "tags": [
+          "Moderator"
+        ],
+        "description": "Resume client",
+        "security": [
+          {
+            "ApiKeyAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/userParameter"
+          },
+          {
+            "name": "clientId",
+            "in": "query",
+            "required": true,
+            "description": "Any connected client, with both cid and sid, must be completely correct to trigger the operation",
+            "schema": {
+              "type": "integer",
+              "example": 1
+            }
+          },
+          {
+            "name": "streamId",
+            "in": "query",
+            "required": true,
+            "description": "Any connected client, with both cid and sid, must be completely correct to trigger the operation",
+            "schema": {
+              "type": "integer",
+              "example": 1
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "allOf": [
+                    {
+                      "$ref": "#/components/schemas/GeneralResponse"
+                    },
+                    {
+                      "type": "object",
+                      "properties": {
+                        "data": {
+                          "type": "string",
+                          "example": "0",
+                          "description": "only return '0'"
+                        }
+                      }
+                    }
+                  ]
+                },
+                "examples": {
+                  "Success": {
+                    "summary": "Success",
+                    "value": {
+                      "data": "0",
+                      "errorCode": 0,
+                      "isSuccess": true,
+                      "model": "VP2021",
+                      "rebootRequired": false
+                    }
+                  },
+                  "failed_1001": {
+                    "$ref": "#/components/examples/failed_1001"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/moderator/client/pauseStream": {
+      "put": {
+        "tags": [
+          "Moderator"
+        ],
+        "description": "Pause client",
+        "security": [
+          {
+            "ApiKeyAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/userParameter"
+          },
+          {
+            "name": "clientId",
+            "in": "query",
+            "required": true,
+            "description": "Any connected client, with both cid and sid, must be completely correct to trigger the operation",
+            "schema": {
+              "type": "integer",
+              "example": 1
+            }
+          },
+          {
+            "name": "streamId",
+            "in": "query",
+            "required": true,
+            "description": "Any connected client, with both cid and sid, must be completely correct to trigger the operation",
+            "schema": {
+              "type": "integer",
+              "example": 1
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "allOf": [
+                    {
+                      "$ref": "#/components/schemas/GeneralResponse"
+                    },
+                    {
+                      "type": "object",
+                      "properties": {
+                        "data": {
+                          "type": "string",
+                          "example": "0",
+                          "description": "only return '0'"
+                        }
+                      }
+                    }
+                  ]
+                },
+                "examples": {
+                  "Success": {
+                    "summary": "Success",
+                    "value": {
+                      "data": "0",
+                      "errorCode": 0,
+                      "isSuccess": true,
+                      "model": "VP2021",
+                      "rebootRequired": false
+                    }
+                  },
+                  "failed_1001": {
+                    "$ref": "#/components/examples/failed_1001"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/moderator/client/stopStream": {
+      "delete": {
+        "tags": [
+          "Moderator"
+        ],
+        "description": "Stop client",
+        "security": [
+          {
+            "ApiKeyAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/userParameter"
+          },
+          {
+            "name": "clientId",
+            "in": "query",
+            "required": true,
+            "description": "Any connected client, with both cid and sid, must be completely correct to trigger the operation",
+            "schema": {
+              "type": "integer",
+              "example": 1
+            }
+          },
+          {
+            "name": "streamId",
+            "in": "query",
+            "required": true,
+            "description": "Any connected client, with both cid and sid, must be completely correct to trigger the operation",
+            "schema": {
+              "type": "integer",
+              "example": 1
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "allOf": [
+                    {
+                      "$ref": "#/components/schemas/GeneralResponse"
+                    },
+                    {
+                      "type": "object",
+                      "properties": {
+                        "data": {
+                          "type": "string",
+                          "example": "0",
+                          "description": "only return '0'"
+                        }
+                      }
+                    }
+                  ]
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/moderator/client/stopAll": {
+      "delete": {
+        "tags": [
+          "Moderator"
+        ],
+        "description": "Stop projections for all clients",
+        "security": [
+          {
+            "ApiKeyAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/userParameter"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "allOf": [
+                    {
+                      "$ref": "#/components/schemas/GeneralResponse"
+                    },
+                    {
+                      "type": "object",
+                      "properties": {
+                        "data": {
+                          "type": "string",
+                          "example": "0",
+                          "description": "only return '0'"
+                        }
+                      }
+                    }
+                  ]
+                },
+                "examples": {
+                  "Success": {
+                    "summary": "Success",
+                    "value": {
+                      "data": "0",
+                      "errorCode": 0,
+                      "isSuccess": true,
+                      "model": "VP2021",
+                      "rebootRequired": false
+                    }
+                  },
+                  "failed_1001": {
+                    "$ref": "#/components/examples/failed_1001"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/moderator/client/kickOut": {
+      "delete": {
+        "tags": [
+          "Moderator"
+        ],
+        "description": "Disconnect client",
+        "security": [
+          {
+            "ApiKeyAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/userParameter"
+          },
+          {
+            "name": "clientId",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "example": 1
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "allOf": [
+                    {
+                      "$ref": "#/components/schemas/GeneralResponse"
+                    },
+                    {
+                      "type": "object",
+                      "properties": {
+                        "data": {
+                          "type": "string",
+                          "example": "0",
+                          "description": "only return '0'"
+                        }
+                      }
+                    }
+                  ]
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/moderator/client/kickOutAll": {
+      "delete": {
+        "tags": [
+          "Moderator"
+        ],
+        "description": "Disconnect all clients",
+        "security": [
+          {
+            "ApiKeyAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/userParameter"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "allOf": [
+                    {
+                      "$ref": "#/components/schemas/GeneralResponse"
+                    },
+                    {
+                      "type": "object",
+                      "properties": {
+                        "data": {
+                          "type": "string",
+                          "example": "0",
+                          "description": "only return '0'"
+                        }
+                      }
+                    }
+                  ]
+                },
+                "examples": {
+                  "Success": {
+                    "summary": "Success",
+                    "value": {
+                      "data": "0",
+                      "errorCode": 0,
+                      "isSuccess": true,
+                      "model": "VP2021",
+                      "rebootRequired": false
+                    }
+                  },
+                  "failed_1001": {
+                    "$ref": "#/components/examples/failed_1001"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/moderator/client/setStreamLayoutPosition": {
+      "put": {
+        "tags": [
+          "Moderator"
+        ],
+        "description": "Change the display position of the projected client",
+        "security": [
+          {
+            "ApiKeyAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/userParameter"
+          },
+          {
+            "name": "clientId",
+            "in": "query",
+            "required": true,
+            "description": "Any connected client, with both cid and sid, must be completely correct to trigger the operation",
+            "schema": {
+              "type": "integer",
+              "example": 1
+            }
+          },
+          {
+            "name": "streamId",
+            "in": "query",
+            "required": true,
+            "description": "Any connected client, with both cid and sid, must be completely correct to trigger the operation",
+            "schema": {
+              "type": "integer",
+              "example": 1
+            }
+          },
+          {
+            "name": "position",
+            "in": "query",
+            "required": true,
+            "description": "1 (Auto), 2 (Full Screen)",
+            "schema": {
+              "type": "integer",
+              "enum": [
+                1,
+                2
+              ],
+              "example": 1
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "allOf": [
+                    {
+                      "$ref": "#/components/schemas/GeneralResponse"
+                    },
+                    {
+                      "type": "object",
+                      "properties": {
+                        "data": {
+                          "type": "string",
+                          "example": "0",
+                          "description": "only return '0'"
+                        }
+                      }
+                    }
+                  ]
+                },
+                "examples": {
+                  "Success": {
+                    "summary": "Success",
+                    "value": {
+                      "data": "0",
+                      "errorCode": 0,
+                      "isSuccess": true,
+                      "model": "VP2021",
+                      "rebootRequired": false
+                    }
+                  },
+                  "failed_1001": {
+                    "$ref": "#/components/examples/failed_1001"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/moderator/client/muteStream": {
+      "put": {
+        "tags": [
+          "Moderator"
+        ],
+        "description": "Change the audio output status of the client",
+        "security": [
+          {
+            "ApiKeyAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/userParameter"
+          },
+          {
+            "name": "clientId",
+            "in": "query",
+            "required": true,
+            "description": "Any connected client, with both cid and sid, must be completely correct to trigger the operation",
+            "schema": {
+              "type": "integer",
+              "example": 1
+            }
+          },
+          {
+            "name": "streamId",
+            "in": "query",
+            "required": true,
+            "description": "Any connected client, with both cid and sid, must be completely correct to trigger the operation",
+            "schema": {
+              "type": "integer",
+              "example": 1
+            }
+          },
+          {
+            "name": "isMute",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "boolean",
+              "enum": [
+                true,
+                false
+              ],
+              "example": false
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "allOf": [
+                    {
+                      "$ref": "#/components/schemas/GeneralResponse"
+                    },
+                    {
+                      "type": "object",
+                      "properties": {
+                        "data": {
+                          "type": "string",
+                          "example": "0",
+                          "description": "only return '0'"
+                        }
+                      }
+                    }
+                  ]
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/moderator/client/muteAll": {
+      "put": {
+        "tags": [
+          "Moderator"
+        ],
+        "description": "Change the audio output status of all clients",
+        "security": [
+          {
+            "ApiKeyAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/userParameter"
+          },
+          {
+            "name": "isMute",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "boolean",
+              "enum": [
+                true,
+                false
+              ],
+              "example": false
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "allOf": [
+                    {
+                      "$ref": "#/components/schemas/GeneralResponse"
+                    },
+                    {
+                      "type": "object",
+                      "properties": {
+                        "data": {
+                          "type": "string",
+                          "example": "0",
+                          "description": "only return '0'"
+                        }
+                      }
+                    }
+                  ]
+                },
+                "examples": {
+                  "Success": {
+                    "summary": "Success",
+                    "value": {
+                      "data": "0",
+                      "errorCode": 0,
+                      "isSuccess": true,
+                      "model": "VP2021",
+                      "rebootRequired": false
+                    }
+                  },
+                  "failed_1001": {
+                    "$ref": "#/components/examples/failed_1001"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "ErrorCode": {
+        "type": "object",
+        "properties": {
+          "errorCode": {
+            "type": "integer",
+            "format": "int32",
+            "enum": [
+              0,
+              1000,
+              1001,
+              1002,
+              1003,
+              1004,
+              1005,
+              1100,
+              1200
+            ],
+            "x-enum-descriptions": [
+              "0,Success",
+              "1000,Fail",
+              "1001,User or APP Key is unavailable",
+              "1002,API internal exception",
+              "1003,Lack parameter",
+              "1004,Basic Auth or APP Key is unavailable",
+              "1005,User or password is unavailable",
+              "1100,The input value is unavailable",
+              "1200,The input file is unavailable"
+            ],
+            "example": 0
+          }
+        }
+      },
+      "Stream": {
+        "type": "object",
+        "properties": {
+          "cid": {
+            "type": "integer",
+            "description": "Client ID"
+          },
+          "sid": {
+            "type": "integer",
+            "description": "Stream ID"
+          },
+          "name": {
+            "type": "string",
+            "description": "Client name"
+          },
+          "st": {
+            "type": "integer",
+            "description": "Stream state",
+            "enum": [
+              0,
+              1,
+              2,
+              3,
+              4
+            ],
+            "example": 0,
+            "x-enumDescriptions": {
+              "0": "Closed",
+              "1": "Stopped",
+              "2": "Paused",
+              "3": "Projecting",
+              "4": "Total"
+            }
+          },
+          "as": {
+            "type": "integer",
+            "description": "Audio state",
+            "enum": [
+              0,
+              1,
+              2
+            ],
+            "example": 1,
+            "x-enumDescriptions": {
+              "0": "NotSupport",
+              "1": "Unmute",
+              "2": "Mute"
+            }
+          },
+          "at": {
+            "type": "integer",
+            "description": "App type",
+            "enum": [
+              0,
+              1,
+              2,
+              3,
+              4,
+              5,
+              6,
+              7,
+              8
+            ],
+            "example": 2,
+            "x-enumDescriptions": {
+              "0": "Unknown",
+              "1": "BeamOpWPS",
+              "2": "BeamOpClient",
+              "3": "BeamOpButtonClient (Pod)",
+              "4": "BeamOpModeratorClient",
+              "5": "WebClient (Browser Sharing)",
+              "6": "AppleClient (AirPlay)",
+              "7": "GoogleClient (GoogleCast)",
+              "8": "Total"
+            }
+          },
+          "ot": {
+            "type": "integer",
+            "description": "Operating system type",
+            "enum": [
+              0,
+              1,
+              2,
+              3,
+              4,
+              5,
+              6,
+              7,
+              8
+            ],
+            "example": 5,
+            "x-enumDescriptions": {
+              "0": "Unknown",
+              "1": "Windows",
+              "2": "MacOS",
+              "3": "Linux",
+              "4": "iOS",
+              "5": "Android",
+              "6": "Chrome",
+              "7": "Console",
+              "8": "Total"
+            }
+          },
+          "av": {
+            "type": "string",
+            "description": "App version"
+          },
+          "ts": {
+            "type": "integer",
+            "description": "Timestamp"
+          },
+          "ps": {
+            "type": "integer",
+            "description": "Stream layout position",
+            "enum": [
+              0,
+              1,
+              2,
+              3,
+              4,
+              5,
+              6,
+              7,
+              8
+            ],
+            "example": 0,
+            "x-enumDescriptions": {
+              "0": "Unknown",
+              "1": "Auto",
+              "2": "FullScreen",
+              "3": "1 (Top Left)",
+              "4": "2 (Top Right)",
+              "5": "3 (Bottom Left)",
+              "6": "4 (Bottom Right)",
+              "7": "Hide",
+              "8": "Total"
+            }
+          }
+        }
+      },
+      "RemoteView": {
+        "type": "object",
+        "description": "Remote view related data",
+        "properties": {
+          "st": {
+            "type": "integer",
+            "description": "Remote view state",
+            "enum": [
+              0,
+              1,
+              2
+            ],
+            "example": 1,
+            "x-enumDescriptions": {
+              "0": "NotSupport",
+              "1": "Disable",
+              "2": "Enable"
+            }
+          },
+          "ct": {
+            "type": "integer",
+            "description": "Connection count for remote view"
+          }
+        }
+      },
+      "ThumbnailStream": {
+        "type": "object",
+        "properties": {
+          "cid": {
+            "type": "integer",
+            "description": "Client ID"
+          },
+          "sid": {
+            "type": "integer",
+            "description": "Stream ID"
+          },
+          "tb": {
+            "type": "string",
+            "description": "Client thumbnail, now only win client has value",
+            "example": "/userfile/ModeratorBackendImage/thumbnail_0.jpg"
+          }
+        }
+      },
+      "GeneralResponse": {
+        "type": "object",
+        "required": [
+          "data",
+          "errorCode",
+          "isSuccess",
+          "model",
+          "rebootRequired"
+        ],
+        "allOf": [
+          {
+            "type": "object",
+            "properties": {
+              "data": {
+                "type": "boolean",
+                "example": true
+              }
+            }
+          },
+          {
+            "$ref": "#/components/schemas/ErrorCode"
+          },
+          {
+            "type": "object",
+            "properties": {
+              "errorMsg": {
+                "type": "string",
+                "example": ""
+              },
+              "isSuccess": {
+                "type": "boolean",
+                "example": true
+              },
+              "model": {
+                "type": "string",
+                "example": "VP2021"
+              },
+              "rebootRequired": {
+                "type": "boolean",
+                "example": false,
+                "description": "The device needs to reboot to apply this new change."
+              }
+            }
+          }
+        ]
+      },
+      "StreamsResponse": {
+        "type": "object",
+        "properties": {
+          "streams": {
+            "type": "array",
+            "items": {
+              "allOf": [
+                {
+                  "$ref": "#/components/schemas/Stream"
+                }
+              ],
+              "description": "List of connected clients data"
+            }
+          },
+          "rv": {
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/RemoteView"
+              }
+            ]
+          }
+        }
+      },
+      "ThumbnailsResponse": {
+        "type": "object",
+        "properties": {
+          "streams": {
+            "type": "array",
+            "items": {
+              "allOf": [
+                {
+                  "$ref": "#/components/schemas/ThumbnailStream"
+                }
+              ],
+              "description": "List of connected clients data"
+            }
+          }
+        }
+      }
+    },
+    "examples": {
+      "success_0": {
+        "summary": "Success",
+        "value": {
+          "data": true,
+          "errorCode": 0,
+          "isSuccess": true,
+          "model": "AS-201",
+          "rebootRequired": false
+        }
+      },
+      "failed_1000": {
+        "summary": "Failed",
+        "value": {
+          "data": "",
+          "errorCode": 1000,
+          "errorMsg": "Failed.",
+          "isSuccess": false,
+          "model": "AS-201",
+          "rebootRequired": false
+        }
+      },
+      "failed_1001": {
+        "summary": "User or APP Key is unavailable",
+        "value": {
+          "data": "",
+          "errorCode": 1001,
+          "errorMsg": "User or APP Key is unavailable.",
+          "isSuccess": false,
+          "model": "AS-201",
+          "rebootRequired": false
+        }
+      },
+      "failed_1002": {
+        "summary": "API internal exception",
+        "value": {
+          "data": "",
+          "errorCode": 1002,
+          "errorMsg": "API internal exception.",
+          "isSuccess": false,
+          "model": "AS-201",
+          "rebootRequired": false
+        }
+      },
+      "failed_1003": {
+        "summary": "Lack parameter",
+        "value": {
+          "data": "",
+          "errorCode": 1003,
+          "errorMsg": "Lack parameter.",
+          "isSuccess": false,
+          "model": "AS-201",
+          "rebootRequired": false
+        }
+      },
+      "failed_1004": {
+        "summary": "Basic Auth or APP Key is unavailable",
+        "value": {
+          "data": "",
+          "errorCode": 1004,
+          "errorMsg": "Basic Auth or APP Key is unavailable.",
+          "isSuccess": false,
+          "model": "AS-201",
+          "rebootRequired": false
+        }
+      },
+      "failed_1005": {
+        "summary": "User or password is unavailable",
+        "value": {
+          "data": "",
+          "errorCode": 1005,
+          "errorMsg": "User or password is unavailable.",
+          "isSuccess": false,
+          "model": "AS-201",
+          "rebootRequired": false
+        }
+      },
+      "failed_1100": {
+        "summary": "The input value is unavailable",
+        "value": {
+          "data": "",
+          "errorCode": 1100,
+          "errorMsg": "The input value is unavailable.",
+          "isSuccess": false,
+          "model": "AS-201",
+          "rebootRequired": false
+        }
+      },
+      "failed_1200": {
+        "summary": "The input file format is unavailable",
+        "value": {
+          "data": "",
+          "errorCoe": 1200,
+          "errorMsg": "The input file format is unavailable.",
+          "isSuccess": false,
+          "model": "AS-201",
+          "rebootRequired": false
+        }
+      }
+    },
+    "parameters": {
+      "userParameter": {
+        "name": "username",
+        "example": "moderatorClient",
+        "in": "query",
+        "required": true,
+        "schema": {
+          "type": "string"
+        }
+      }
+    },
+    "securitySchemes": {
+      "ApiKeyAuth": {
+        "type": "apiKey",
+        "description": "The API Key for issuing a API request.",
+        "in": "header",
+        "name": "X-API-KEY"
+      },
+      "BasicAuth": {
+        "description": "Basic HTTP security authentication. Allowed headers: 'Authorization: Basic <api_key>' or 'Authorization: Basic XXXXXX', where XXXXX is the base64 encoded string of username:password. e.g. Authorization: Basic bW9kZXJhdG9yQ2xpZW50Og==",
+        "type": "http",
+        "scheme": "basic"
+      }
+    }
+  },
+  "security": [
+    {
+      "ApiKeyAuth": []
+    },
+    {
+      "BasicAuth": []
+    }
+  ]
+}
