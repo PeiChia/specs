@@ -1542,26 +1542,27 @@
         "name": "Authorization",
         "in": "header",
         "required": true,
+        "description": "Basic HTTP security authentication",
         "schema": {
           "type": "string",
           "example": "Basic bW9kZXJhdG9yQ2xpZW50Og=="
-        },
-        "description": "Basic HTTP security authentication"
+        }
       },
       "ApiKeyParameter": {
         "name": "X-API-KEY",
         "in": "header",
         "required": true,
+        "description": "API Key for authenticating requests",
         "schema": {
           "type": "string",
           "example": "K0ovDyWZtui7B72s"
-        },
-        "description": "API Key for authenticating requests"
+        }
       },
       "userParameter": {
         "name": "username",
         "in": "query",
         "required": true,
+        "description": "Use 'moderatorClient'",
         "schema": {
           "type": "string",
           "example": "moderatorClient"
