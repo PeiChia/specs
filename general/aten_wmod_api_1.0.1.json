@@ -1184,7 +1184,7 @@
           },
           "st": {
             "type": "integer",
-            "description": "Stream state",
+            "description": "Stream state:\n- 0: Closed\n- 1: Stopped\n- 2: Paused\n- 3: Projecting\n- 4: Total\n",
             "enum": [
               0,
               1,
@@ -1192,33 +1192,21 @@
               3,
               4
             ],
-            "example": 0,
-            "x-enumDescriptions": {
-              "0": "Closed",
-              "1": "Stopped",
-              "2": "Paused",
-              "3": "Projecting",
-              "4": "Total"
-            }
+            "example": 0
           },
           "as": {
             "type": "integer",
-            "description": "Audio state",
+            "description": "Audio state:\n- 0: NotSupport\n- 1: Unmute\n- 2: Mute\n",
             "enum": [
               0,
               1,
               2
             ],
-            "example": 1,
-            "x-enumDescriptions": {
-              "0": "NotSupport",
-              "1": "Unmute",
-              "2": "Mute"
-            }
+            "example": 1
           },
           "at": {
             "type": "integer",
-            "description": "App type",
+            "description": "App type:\n- 0: \"Unknown\"\n- 1: \"BeamOpWPS\"\n- 2: \"BeamOpClient\"\n- 3: \"BeamOpButtonClient (Pod)\"\n- 4: \"BeamOpModeratorClient\"\n- 5: \"WebClient (Browser Sharing)\"\n- 6: \"AppleClient (AirPlay)\"\n- 7: \"GoogleClient (GoogleCast)\"\n- 8: \"Total\"\n",
             "enum": [
               0,
               1,
@@ -1230,22 +1218,11 @@
               7,
               8
             ],
-            "example": 2,
-            "x-enumDescriptions": {
-              "0": "Unknown",
-              "1": "BeamOpWPS",
-              "2": "BeamOpClient",
-              "3": "BeamOpButtonClient (Pod)",
-              "4": "BeamOpModeratorClient",
-              "5": "WebClient (Browser Sharing)",
-              "6": "AppleClient (AirPlay)",
-              "7": "GoogleClient (GoogleCast)",
-              "8": "Total"
-            }
+            "example": 2
           },
           "ot": {
             "type": "integer",
-            "description": "Operating system type",
+            "description": "Operating system type:\n- 0: \"Unknown\"\n- 1: \"Windows\"\n- 2: \"MacOS\"\n- 3: \"Linux\"\n- 4: \"iOS\"\n- 5: \"Android\"\n- 6: \"Chrome\"\n- 7: \"Console\"\n- 8: \"Total\"\n",
             "enum": [
               0,
               1,
@@ -1257,18 +1234,7 @@
               7,
               8
             ],
-            "example": 5,
-            "x-enumDescriptions": {
-              "0": "Unknown",
-              "1": "Windows",
-              "2": "MacOS",
-              "3": "Linux",
-              "4": "iOS",
-              "5": "Android",
-              "6": "Chrome",
-              "7": "Console",
-              "8": "Total"
-            }
+            "example": 5
           },
           "av": {
             "type": "string",
@@ -1280,7 +1246,7 @@
           },
           "ps": {
             "type": "integer",
-            "description": "Stream layout position",
+            "description": "Stream layout position:\n- 0: \"Unknown\"\n- 1: \"Auto\"\n- 2: \"FullScreen\"\n- 3: \"1 (Top Left)\"\n- 4: \"2 (Top Right)\"\n- 5: \"3 (Bottom Left)\"\n- 6: \"4 (Bottom Right)\"\n- 7: \"Hide\"\n- 8: \"Total\"\n",
             "enum": [
               0,
               1,
@@ -1292,18 +1258,7 @@
               7,
               8
             ],
-            "example": 0,
-            "x-enumDescriptions": {
-              "0": "Unknown",
-              "1": "Auto",
-              "2": "FullScreen",
-              "3": "1 (Top Left)",
-              "4": "2 (Top Right)",
-              "5": "3 (Bottom Left)",
-              "6": "4 (Bottom Right)",
-              "7": "Hide",
-              "8": "Total"
-            }
+            "example": 0
           }
         }
       },
@@ -1313,18 +1268,13 @@
         "properties": {
           "st": {
             "type": "integer",
-            "description": "Remote view state",
+            "description": "Remote view state:\n- 0: \"NotSupport\"\n- 1: \"Disable\"\n- 2: \"Enable\"\n",
             "enum": [
               0,
               1,
               2
             ],
-            "example": 1,
-            "x-enumDescriptions": {
-              "0": "NotSupport",
-              "1": "Disable",
-              "2": "Enable"
-            }
+            "example": 1
           },
           "ct": {
             "type": "integer",
