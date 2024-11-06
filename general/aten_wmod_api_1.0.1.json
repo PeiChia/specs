@@ -236,6 +236,15 @@
                   "allOf": [
                     {
                       "$ref": "#/components/schemas/GeneralResponse"
+                    },
+                    {
+                      "type": "object",
+                      "properties": {
+                        "data": {
+                          "type": "string",
+                          "example": ""
+                        }
+                      }
                     }
                   ]
                 },
@@ -243,7 +252,7 @@
                   "Success": {
                     "summary": "Success",
                     "value": {
-                      "data": true,
+                      "data": "",
                       "errorCode": 0,
                       "isSuccess": true,
                       "model": "VP2021",
