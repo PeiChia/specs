@@ -168,6 +168,9 @@
         ],
         "parameters": [
           {
+            "$ref": "#/components/parameters/BasicAuthParameter"
+          },
+          {
             "$ref": "#/components/parameters/userParameter"
           }
         ],
@@ -224,6 +227,9 @@
         ],
         "parameters": [
           {
+            "$ref": "#/components/parameters/ApiKeyParameter"
+          },
+          {
             "$ref": "#/components/parameters/userParameter"
           }
         ],
@@ -278,6 +284,9 @@
           }
         ],
         "parameters": [
+          {
+            "$ref": "#/components/parameters/ApiKeyParameter"
+          },
           {
             "$ref": "#/components/parameters/userParameter"
           }
@@ -345,6 +354,9 @@
           }
         ],
         "parameters": [
+          {
+            "$ref": "#/components/parameters/ApiKeyParameter"
+          },
           {
             "$ref": "#/components/parameters/userParameter"
           },
@@ -425,6 +437,9 @@
           }
         ],
         "parameters": [
+          {
+            "$ref": "#/components/parameters/ApiKeyParameter"
+          },
           {
             "$ref": "#/components/parameters/userParameter"
           },
@@ -519,6 +534,9 @@
         ],
         "parameters": [
           {
+            "$ref": "#/components/parameters/ApiKeyParameter"
+          },
+          {
             "$ref": "#/components/parameters/userParameter"
           },
           {
@@ -597,6 +615,9 @@
           }
         ],
         "parameters": [
+          {
+            "$ref": "#/components/parameters/ApiKeyParameter"
+          },
           {
             "$ref": "#/components/parameters/userParameter"
           },
@@ -677,6 +698,9 @@
         ],
         "parameters": [
           {
+            "$ref": "#/components/parameters/ApiKeyParameter"
+          },
+          {
             "$ref": "#/components/parameters/userParameter"
           },
           {
@@ -741,6 +765,9 @@
         ],
         "parameters": [
           {
+            "$ref": "#/components/parameters/ApiKeyParameter"
+          },
+          {
             "$ref": "#/components/parameters/userParameter"
           }
         ],
@@ -800,6 +827,9 @@
         ],
         "parameters": [
           {
+            "$ref": "#/components/parameters/ApiKeyParameter"
+          },
+          {
             "$ref": "#/components/parameters/userParameter"
           },
           {
@@ -852,6 +882,9 @@
           }
         ],
         "parameters": [
+          {
+            "$ref": "#/components/parameters/ApiKeyParameter"
+          },
           {
             "$ref": "#/components/parameters/userParameter"
           }
@@ -911,6 +944,9 @@
           }
         ],
         "parameters": [
+          {
+            "$ref": "#/components/parameters/ApiKeyParameter"
+          },
           {
             "$ref": "#/components/parameters/userParameter"
           },
@@ -1005,6 +1041,9 @@
         ],
         "parameters": [
           {
+            "$ref": "#/components/parameters/ApiKeyParameter"
+          },
+          {
             "$ref": "#/components/parameters/userParameter"
           },
           {
@@ -1081,6 +1120,9 @@
           }
         ],
         "parameters": [
+          {
+            "$ref": "#/components/parameters/ApiKeyParameter"
+          },
           {
             "$ref": "#/components/parameters/userParameter"
           },
@@ -1496,20 +1538,40 @@
       }
     },
     "parameters": {
+      "BasicAuthParameter": {
+        "name": "Authorization",
+        "in": "header",
+        "required": true,
+        "schema": {
+          "type": "string",
+          "example": "Basic bW9kZXJhdG9yQ2xpZW50Og=="
+        },
+        "description": "Basic HTTP security authentication"
+      },
+      "ApiKeyParameter": {
+        "name": "X-API-KEY",
+        "in": "header",
+        "required": true,
+        "schema": {
+          "type": "string",
+          "example": "K0ovDyWZtui7B72s"
+        },
+        "description": "API Key for authenticating requests"
+      },
       "userParameter": {
         "name": "username",
-        "example": "moderatorClient",
         "in": "query",
         "required": true,
         "schema": {
-          "type": "string"
+          "type": "string",
+          "example": "moderatorClient"
         }
       }
     },
     "securitySchemes": {
       "ApiKeyAuth": {
         "type": "apiKey",
-        "description": "The API Key for issuing a API request.",
+        "description": "Use the 'X-API-KEY' header to include the API key when issuing requests.",
         "in": "header",
         "name": "X-API-KEY"
       },
