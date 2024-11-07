@@ -50,110 +50,6 @@
     }
   ],
   "paths": {
-    "/astro/login/moderation": {
-      "get": {
-        "tags": [
-          "User"
-        ],
-        "description": "After a successful login, it will have the same effect as the 'moderation mode' displayed on the OSD, where the text changes from 'connected' to 'Moderation on' when connected through the client.",
-        "parameters": [
-          {
-            "in": "query",
-            "name": "account",
-            "required": true,
-            "schema": {
-              "type": "string"
-            },
-            "example": "moderator",
-            "description": "Consistently use 'moderator'"
-          },
-          {
-            "in": "query",
-            "name": "password",
-            "required": true,
-            "schema": {
-              "type": "string"
-            },
-            "example": "moderator",
-            "description": "default is 'moderator'"
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Success",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "allOf": [
-                    {
-                      "$ref": "#/components/schemas/GeneralResponse"
-                    }
-                  ]
-                },
-                "examples": {
-                  "Success": {
-                    "summary": "Success",
-                    "value": {
-                      "data": true,
-                      "errorCode": 0,
-                      "isSuccess": true,
-                      "model": "VP2021",
-                      "rebootRequired": false
-                    }
-                  },
-                  "Fail": {
-                    "summary": "Fail: password not correct",
-                    "value": {
-                      "data": false,
-                      "errorCode": 0,
-                      "isSuccess": true,
-                      "model": "VP2021",
-                      "rebootRequired": false
-                    }
-                  }
-                }
-              }
-            }
-          }
-        }
-      }
-    },
-    "/astro/logout/moderation": {
-      "get": {
-        "tags": [
-          "User"
-        ],
-        "description": "Exit moderator mode.",
-        "responses": {
-          "200": {
-            "description": "Success",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "allOf": [
-                    {
-                      "$ref": "#/components/schemas/GeneralResponse"
-                    }
-                  ]
-                },
-                "examples": {
-                  "Success": {
-                    "summary": "Success",
-                    "value": {
-                      "data": true,
-                      "errorCode": 0,
-                      "isSuccess": true,
-                      "model": "VP2021",
-                      "rebootRequired": false
-                    }
-                  }
-                }
-              }
-            }
-          }
-        }
-      }
-    },
     "/api/v1/device/admin/apikey": {
       "put": {
         "tags": [
@@ -342,89 +238,6 @@
         }
       }
     },
-    "/api/v1/moderator/client/thumbnails": {
-      "get": {
-        "tags": [
-          "Moderator"
-        ],
-        "description": "Retrieve the screenshot thumbnail of the client. Currently, only the Windows client has a thumbnail",
-        "security": [
-          {
-            "ApiKeyAuth": []
-          }
-        ],
-        "parameters": [
-          {
-            "$ref": "#/components/parameters/ApiKeyParameter"
-          },
-          {
-            "$ref": "#/components/parameters/userParameter"
-          },
-          {
-            "name": "projecting",
-            "in": "query",
-            "required": true,
-            "description": "true: Display only the projection screen, false: Display projection & standby screens",
-            "schema": {
-              "type": "boolean",
-              "enum": [
-                true,
-                false
-              ]
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Success",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "allOf": [
-                    {
-                      "$ref": "#/components/schemas/GeneralResponse"
-                    },
-                    {
-                      "type": "object",
-                      "properties": {
-                        "data": {
-                          "$ref": "#/components/schemas/ThumbnailsResponse"
-                        }
-                      }
-                    }
-                  ]
-                },
-                "examples": {
-                  "Success_1": {
-                    "summary": "Success (No connection)",
-                    "value": {
-                      "data": "{\"streams\":[]}",
-                      "errorCode": 0,
-                      "isSuccess": true,
-                      "model": "VP2021",
-                      "rebootRequired": false
-                    }
-                  },
-                  "Success_2": {
-                    "summary": "Success (One connection)",
-                    "value": {
-                      "data": "{\"streams\":[{\"cid\":4,\"sid\":3,\"tb\":\"/userfile/ModeratorBackendImage/thumbnail_0.jpg\"}]}",
-                      "errorCode": 0,
-                      "isSuccess": true,
-                      "model": "VP2021",
-                      "rebootRequired": false
-                    }
-                  },
-                  "failed_1001": {
-                    "$ref": "#/components/examples/failed_1001"
-                  }
-                }
-              }
-            }
-          }
-        }
-      }
-    },
     "/api/v1/moderator/client/startStream": {
       "post": {
         "tags": [
@@ -527,88 +340,6 @@
           "Moderator"
         ],
         "description": "Resume client",
-        "security": [
-          {
-            "ApiKeyAuth": []
-          }
-        ],
-        "parameters": [
-          {
-            "$ref": "#/components/parameters/ApiKeyParameter"
-          },
-          {
-            "$ref": "#/components/parameters/userParameter"
-          },
-          {
-            "name": "clientId",
-            "in": "query",
-            "required": true,
-            "description": "Any connected client, with both cid and sid, must be completely correct to trigger the operation",
-            "schema": {
-              "type": "integer",
-              "example": 1
-            }
-          },
-          {
-            "name": "streamId",
-            "in": "query",
-            "required": true,
-            "description": "Any connected client, with both cid and sid, must be completely correct to trigger the operation",
-            "schema": {
-              "type": "integer",
-              "example": 1
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Success",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "allOf": [
-                    {
-                      "$ref": "#/components/schemas/GeneralResponse"
-                    },
-                    {
-                      "type": "object",
-                      "properties": {
-                        "data": {
-                          "type": "string",
-                          "example": "0",
-                          "description": "only return '0'"
-                        }
-                      }
-                    }
-                  ]
-                },
-                "examples": {
-                  "Success": {
-                    "summary": "Success",
-                    "value": {
-                      "data": "0",
-                      "errorCode": 0,
-                      "isSuccess": true,
-                      "model": "VP2021",
-                      "rebootRequired": false
-                    }
-                  },
-                  "failed_1001": {
-                    "$ref": "#/components/examples/failed_1001"
-                  }
-                }
-              }
-            }
-          }
-        }
-      }
-    },
-    "/api/v1/moderator/client/pauseStream": {
-      "put": {
-        "tags": [
-          "Moderator"
-        ],
-        "description": "Pause client",
         "security": [
           {
             "ApiKeyAuth": []
@@ -1175,6 +906,134 @@
                   },
                   "failed_1001": {
                     "$ref": "#/components/examples/failed_1001"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/device/general/remoteview": {
+      "get": {
+        "tags": [
+          "Moderator"
+        ],
+        "description": "Check remote view status",
+        "security": [
+          {
+            "ApiKeyAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/ApiKeyParameter"
+          },
+          {
+            "$ref": "#/components/parameters/userParameter"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "allOf": [
+                    {
+                      "$ref": "#/components/schemas/GeneralResponse"
+                    },
+                    {
+                      "type": "object",
+                      "properties": {
+                        "data": {
+                          "type": "string",
+                          "example": "true",
+                          "description": "string \"true\" & \"false\""
+                        }
+                      }
+                    }
+                  ]
+                },
+                "examples": {
+                  "Success": {
+                    "summary": "Success",
+                    "value": {
+                      "data": "true",
+                      "errorCode": 0,
+                      "isSuccess": true,
+                      "model": "VP2021",
+                      "rebootRequired": false
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "Moderator"
+        ],
+        "description": "Change remote view status",
+        "security": [
+          {
+            "ApiKeyAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/ApiKeyParameter"
+          },
+          {
+            "$ref": "#/components/parameters/userParameter"
+          },
+          {
+            "name": "value",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "boolean",
+              "enum": [
+                true,
+                false
+              ],
+              "example": false
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "allOf": [
+                    {
+                      "$ref": "#/components/schemas/GeneralResponse"
+                    },
+                    {
+                      "type": "object",
+                      "properties": {
+                        "data": {
+                          "type": "string",
+                          "example": ""
+                        }
+                      }
+                    }
+                  ]
+                },
+                "examples": {
+                  "Success": {
+                    "summary": "Success",
+                    "value": {
+                      "data": "",
+                      "errorCode": 0,
+                      "isSuccess": true,
+                      "model": "VP2021",
+                      "rebootRequired": false
+                    }
                   }
                 }
               }
